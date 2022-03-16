@@ -14,7 +14,6 @@ public class GameOverScreen : MonoBehaviour
         overlay.SetActive(false);
         gameObject.SetActive(true);
         pointsText.text = score.ToString() + " Fish";
-        //Canvas.transform.position = new Vector3(100, 100);
     }
 
     public void RestartButton()

@@ -7,8 +7,6 @@ public class FishWalrus : MonoBehaviour
     public GameObject fish;
     public GameObject walrus;
 
-    //float speed = 5f;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

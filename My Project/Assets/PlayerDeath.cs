@@ -38,7 +38,6 @@ public class PlayerDeath : MonoBehaviour
             }
             player.transform.SetPositionAndRotation(spawn, Quaternion.identity);
             GetComponent<PlayerMovement>().facingRight = true;
-            //FindObjectOfType<AudioManager>().Stop("Background");
             FindObjectOfType<AudioManager>().Play("Death");
         }
     }

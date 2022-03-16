@@ -5,7 +5,6 @@ using UnityEngine;
 public class MovePlatform : MonoBehaviour
 {
     public Rigidbody2D rigidbody2d;
-    Rigidbody2D rbPlayer;
 
     [Header("===Non Random Fields===")]
     public int speed = 5;
@@ -33,26 +32,18 @@ public class MovePlatform : MonoBehaviour
 
         direction = Random.Range(1, 3);
         if (direction == 1)
-        {
             rigidbody2d.velocity = new Vector2(speed, 0);
-        }
         else
-        {
             rigidbody2d.velocity = new Vector2(-speed, 0);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         if (rigidbody2d.position.x < startPos.x - distance)
-        {
             rigidbody2d.velocity = new Vector2(speed, 0);
-        }
         if (rigidbody2d.position.x > startPos.x + distance)
-        {
             rigidbody2d.velocity = new Vector2(-speed, 0);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,7 +52,6 @@ public class MovePlatform : MonoBehaviour
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 10;
             collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce += 100;
-            
         }
     }
 
@@ -77,8 +67,6 @@ public class MovePlatform : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        }
     }
 }

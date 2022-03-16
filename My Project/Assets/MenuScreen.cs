@@ -22,6 +22,7 @@ public class MenuScreen : MonoBehaviour
     void OnClickReturn()
     {
         Time.timeScale = 1;
+        FindObjectOfType<PlayerMovement>().menuActive = false;
         canvas.SetActive(false);
     }
     void OnClickSettings()

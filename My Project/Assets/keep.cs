@@ -5,8 +5,5 @@ using UnityEngine;
 public class keep : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);   
-    }
+    void Start() => DontDestroyOnLoad(gameObject);
 }

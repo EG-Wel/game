@@ -12,10 +12,7 @@ public class LevelManager : MonoBehaviour
 
     public CinemachineVirtualCameraBase cam;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    private void Awake() => instance = this;
 
     public void Respawn()
     {

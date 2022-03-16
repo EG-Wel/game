@@ -16,7 +16,6 @@ public class walrusMove : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-
         Invoke("MoveWalrus", 2.5f);
     }
 
@@ -25,18 +24,11 @@ public class walrusMove : MonoBehaviour
     {
         distance = Vector2.Distance(Player.position, Walrus.position);
         if (rb.position.y > 0)
-        {
             rb.velocity = new Vector2(speed, -10);
-        }
         else if (rb.position.y < -0.8)
-        {
             rb.velocity = new Vector2(speed, 10);
-        }
         if (Player.position.x < Walrus.position.x)
-        {
             speed = 0;
-        }
-        print(speed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -47,9 +39,7 @@ public class walrusMove : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
             Player = collision.transform;
-        }
     }
 
     public void MoveWalrus()
@@ -58,8 +48,5 @@ public class walrusMove : MonoBehaviour
         Invoke("DestroyWall", 1.5f);
     }
 
-    public void DestroyWall()
-    {
-        Destroy(edgeColl);
-    }
+    public void DestroyWall() => Destroy(edgeColl);
 }
