@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 spawn;
     public CircleCollider2D circleCollider;
 
+    float coyoteTime = 0.15f;
+    public float coyoteTimeCounter;
+
     public float runSpeed = 40f;
     public bool isJumping = false;
     public bool stopMovement = false;
@@ -27,10 +30,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(controller.GetComponent<Rigidbody2D>().velocity.y);
         isJumping = !GetComponent<CharacterController2D>().m_Grounded;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+        if (GetComponent<CharacterController2D>().m_Grounded)
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.deltaTime;
 
         // If player is moving -> play running animation
         // Else stop animation
@@ -41,13 +50,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (isJumping)
-                jump = false;
-            else
+            if (coyoteTimeCounter > 0f)
+            {
                 jump = true;
+                coyoteTimeCounter = 0f;
+            }
+            else
+                jump = false;
         }
 
-        // When player falling drag increases so it looks like hes gliding
+        // When player falling drag increases so it looks like he is gliding
         if (rb.velocity.y < 0)
             rb.drag = 5f;
         else
@@ -67,8 +79,12 @@ public class PlayerMovement : MonoBehaviour
             
         if (horizontalMove == 0)
             controller.Move(0, false, jump);
-        if (controller.GetComponent<Rigidbody2D>().velocity.y > 25)
-            controller.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+        if (controller.GetComponent<Rigidbody2D>().velocity.y > 20)
+            if (GetComponent<CharacterController2D>().m_JumpForce == 650)
+                controller.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 10);
+            else if (GetComponent<CharacterController2D>().m_JumpForce == 850)
+                controller.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 14);
         
         if (FindObjectOfType<CharacterController2D>().m_Grounded)
         {
@@ -176,8 +192,8 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene(2);
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
+                floor = false;
                 FindObjectOfType<AudioManager>().Play("Door");
-                FindObjectOfType<DoorText>().text = null;
             }
         }
 
@@ -188,6 +204,7 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene(3);
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
+                floor = false;
                 FindObjectOfType<AudioManager>().Play("Door");
             }
         }
@@ -199,6 +216,7 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene(4);
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
+                floor = false;
                 collision.gameObject.GetComponent<AudioSource>().PlayDelayed(3f);
                 FindObjectOfType<AudioManager>().Play("RUN!");
                 FindObjectOfType<AudioManager>().Stop("Background");
