@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveBird : MonoBehaviour
 {
-
     public Rigidbody2D birdRigidbody2d;
 
     [Header("===Non Random Fields===")]
@@ -38,9 +37,7 @@ public class MoveBird : MonoBehaviour
             speed = Random.Range(randomSpeedMin, randomSpeedMax);
            
             if (direction == 1)
-            {
                 birdRigidbody2d.velocity = new Vector2(speed, 0);
-            }
             else
             {
                 birdRigidbody2d.velocity = new Vector2(-speed, 0);
@@ -48,13 +45,9 @@ public class MoveBird : MonoBehaviour
             }
         }
         else
-        {
             birdRigidbody2d.velocity = new Vector2(speed, 0);
-        }
         if (useRandomDistance)
-        {
             distance = Random.Range(randomDistanceMin, randomDistanceMax);
-        }
     }
 
     // Update is called once per frame

@@ -11,8 +11,8 @@ public class Fish : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(fish);
-            ScoreManager.instance.ChangeScore();
             FindObjectOfType<AudioManager>().Play("Fish");
+            ScoreManager.instance.ChangeScore(1);
         }
     }
 }

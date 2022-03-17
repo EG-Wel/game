@@ -6,9 +6,5 @@ public class wall : MonoBehaviour
 {
     public GameObject edgeColl;
 
-    public void DestroyWall()
-    {
-        print("hi");
-        Destroy(edgeColl);
-    }
+    public void DestroyWall() => Destroy(edgeColl);
 }

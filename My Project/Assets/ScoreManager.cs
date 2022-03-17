@@ -15,16 +15,34 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         if (instance == null)
-        {
             instance = this;
-        }
     }
 
-    public void ChangeScore()
+    public void ChangeScore(int points)
     {
-        score += 1;
-        // Debug.Log("Aantal Fish: -> " + score);
+        // Add points to score
+        score += points;
+
+        // Display points on display
         text.text = score.ToString();
-        //doorText.text = score.ToString() + "/4";
+
+        // Check what door/lvl player is on
+        // Display points above door
+        if (doorText.name == "Aantal_Fish_lvl1")
+            doorText.text = score.ToString() + "/4";
+
+        if (doorText.name == "Aantal_Fish_lvl2")
+            doorText.text = score.ToString() + "/12"; 
+        
+        if (doorText.name == "Aantal_Fish_lvl3")
+            doorText.text = score.ToString() + "/16";
+    }
+
+    public void Door(Collider2D collider)
+    {
+        if (collider.gameObject.name == "Door")
+            doorText = collider.gameObject.GetComponent<DoorText>().text;
+
+        ChangeScore(0);
     }
 }

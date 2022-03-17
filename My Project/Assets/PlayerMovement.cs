@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public bool jump = false;
     public bool facingRight = true;
     public bool floor = false;
+    public bool menuActive = false;
     bool noseOnFloor = false;
-    private bool menuActive = false;
 
     float horizontalMove = 0f;
     
@@ -76,15 +76,22 @@ public class PlayerMovement : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("Jump");
         }
         else
-        {
             animator.SetBool("IsJumping", true);
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Time.timeScale = 0;
-            menuScreen.SetActive(true);
-            menuActive = true;
+            if (menuActive)
+            {
+                menuScreen.SetActive(false);
+                menuActive = false;
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+                menuScreen.SetActive(true);
+                menuActive = true;
+            }
         }
 
         if (!FindObjectOfType<CharacterController2D>().m_Grounded && floor)
@@ -103,18 +110,21 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
-        {
             noseOnFloor = true;
-        }
+
+        if (collision.gameObject.CompareTag("DoorDetection"))
+            ScoreManager.instance.Door(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
-        {
             noseOnFloor = false;
-        }
+
+        if (collision.gameObject.CompareTag("DoorDetection"))
+            ScoreManager.instance.Door(collision);
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
@@ -122,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
             floor = true;
         }
+
         if (collision.gameObject.CompareTag("Door"))
             CheckDoor(collision);
 
@@ -166,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 FindObjectOfType<AudioManager>().Play("Door");
+                FindObjectOfType<DoorText>().text = null;
             }
         }
 

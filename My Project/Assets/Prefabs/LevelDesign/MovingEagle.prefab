@@ -141,7 +141,7 @@ MonoBehaviour:
   birdRigidbody2d: {fileID: 357404094258797583}
   speed: 5
   distance: 5
-  useRandomSpeed: 1
+  useRandomSpeed: 0
   useRandomDistance: 1
   randomSpeedMin: 3
   randomSpeedMax: 11

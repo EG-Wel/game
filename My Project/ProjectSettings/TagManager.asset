@@ -14,6 +14,8 @@ TagManager:
   - Bird
   - movinBlock
   - Walrus
+  - DoorDetection
+  - Nose
   layers:
   - Default
   - TransparentFX
@@ -54,9 +56,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 2709812345
-    locked: 0
   - name: Foreground
     uniqueID: 696032989
+    locked: 0
+  - name: Wall
+    uniqueID: 1059684971
+    locked: 0
+  - name: UI
+    uniqueID: 125185885
+    locked: 0
+  - name: Player
+    uniqueID: 2709812345
     locked: 0

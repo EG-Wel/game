@@ -22,13 +22,9 @@ public class MoveWall : MonoBehaviour
         {
             direction = Random.Range(1, 3);
             if (direction == 1)
-            {
                 rigidbody2d.velocity = new Vector2(0, speed);
-            }
             else
-            {
                 rigidbody2d.velocity = new Vector2(0, -speed);
-            }
         }
         else
             rigidbody2d.velocity = new Vector2(0, speed);        
@@ -38,12 +34,9 @@ public class MoveWall : MonoBehaviour
     void Update()
     {
         if (rigidbody2d.position.y < startPos.y - distance)
-        {
             rigidbody2d.velocity = new Vector2(0, speed);
-        }
+
         if (rigidbody2d.position.y > startPos.y + distance)
-        {
             rigidbody2d.velocity = new Vector2(0, -speed);
-        }
     }
 }
