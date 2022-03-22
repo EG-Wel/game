@@ -19,6 +19,6 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton()
     {
         Destroy(Canvas);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("LevelSelector");
     }
 }

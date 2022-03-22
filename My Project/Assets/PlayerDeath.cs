@@ -15,7 +15,7 @@ public class PlayerDeath : MonoBehaviour
     public Text coins;
 
     float timeF;
-    private int death = 0;
+    public int death = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

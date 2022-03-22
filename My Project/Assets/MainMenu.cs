@@ -1,9 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayButton() => SceneManager.LoadScene(1);
+    public bool toggle = false;
+    public void PlayButton()
+    {
+        if (toggle)
+            SceneManager.LoadScene("Uitleg");
+        else
+            SceneManager.LoadScene("LevelSelector");
+    }
+
+    public void Toggle()
+    {
+        toggle = !toggle;
+    }
 }

@@ -32,10 +32,10 @@ public class ScoreManager : MonoBehaviour
             doorText.text = score.ToString() + "/4";
 
         if (doorText.name == "Aantal_Fish_lvl2")
-            doorText.text = score.ToString() + "/12"; 
+            doorText.text = score.ToString() + "/8"; 
         
         if (doorText.name == "Aantal_Fish_lvl3")
-            doorText.text = score.ToString() + "/16";
+            doorText.text = score.ToString() + "/4";
     }
 
     public void Door(Collider2D collider)
