@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovePlatform : MonoBehaviour
 {
-    public Rigidbody2D rigidbody2d;
+    public Rigidbody2D rb;
 
     [Header("===Non Random Fields===")]
     public int speed = 5;
@@ -30,28 +30,22 @@ public class MovePlatform : MonoBehaviour
     {
         startPos = transform.position;
 
-        direction = Random.Range(1, 3);
-        if (direction == 1)
-            rigidbody2d.velocity = new Vector2(speed, 0);
-        else
-            rigidbody2d.velocity = new Vector2(-speed, 0);
+        RandomStartDir();    
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (rigidbody2d.position.x < startPos.x - distance)
-            rigidbody2d.velocity = new Vector2(speed, 0);
-        if (rigidbody2d.position.x > startPos.x + distance)
-            rigidbody2d.velocity = new Vector2(-speed, 0);
+        Move();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isJumping)
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 10;
-            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce += 100;
+            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce = 950;
         }
     }
 
@@ -60,13 +54,24 @@ public class MovePlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 2;
-            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce -= 100;
+            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce = 850;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void RandomStartDir()
     {
-        if (collision.gameObject.CompareTag("Player"))
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        direction = Random.Range(1, 3);
+        if (direction == 1)
+            rb.velocity = new Vector2(speed, 0);
+        else
+            rb.velocity = new Vector2(-speed, 0);
+    }
+
+    private void Move()
+    {
+        if (rb.position.x < startPos.x - distance)
+            rb.velocity = new Vector2(speed, 0);
+        if (rb.position.x > startPos.x + distance)
+            rb.velocity = new Vector2(-speed, 0);
     }
 }

@@ -1052,6 +1052,7 @@ MonoBehaviour:
   rigidbody2d: {fileID: 6012387432507951512}
   speed: 5
   distance: 5
+  randDirectionOnStart: 0
 --- !u!50 &6012387432507951512
 Rigidbody2D:
   serializedVersion: 4

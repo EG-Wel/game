@@ -21,9 +21,10 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
     }
-
+    
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         audioo = GetComponent<AudioSource>();
         Play("Background");
     }

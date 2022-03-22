@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -19,6 +17,6 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton()
     {
         Destroy(Canvas);
-        SceneManager.LoadScene(1);
+        UnitySceneManager.LoadScene("LevelSelector");
     }
 }
