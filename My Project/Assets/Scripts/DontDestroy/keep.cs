@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class keep : MonoBehaviour
 { 
@@ -24,7 +25,7 @@ public class keep : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        currentScene = SceneManager.GetActiveScene();
+        currentScene = UnitySceneManager.GetActiveScene();
 
         if (currentScene.name == "Level1")
             scene1 = true;

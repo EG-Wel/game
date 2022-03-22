@@ -20,22 +20,26 @@ public class ScoreManager : MonoBehaviour
 
     public void ChangeScore(int points)
     {
-        // Add points to score
-        score += points;
+        if (doorText != null)
+        {
+            print("hello");
+            // Add points to score
+            score += points;
 
-        // Display points on display
-        text.text = score.ToString();
+            // Display points on display
+            text.text = score.ToString();
 
-        // Check what door/lvl player is on
-        // Display points above door
-        if (doorText.name == "Aantal_Fish_lvl1")
-            doorText.text = score.ToString() + "/4";
+            // Check what door/lvl player is on
+            // Display points above door
+            if (doorText.name == "Aantal_Fish_lvl1")
+                doorText.text = score.ToString() + "/4";
 
-        if (doorText.name == "Aantal_Fish_lvl2")
-            doorText.text = score.ToString() + "/8"; 
-        
-        if (doorText.name == "Aantal_Fish_lvl3")
-            doorText.text = score.ToString() + "/4";
+            if (doorText.name == "Aantal_Fish_lvl2")
+                doorText.text = score.ToString() + "/8";
+
+            if (doorText.name == "Aantal_Fish_lvl3")
+                doorText.text = score.ToString() + "/4";
+        }
     }
 
     public void Door(Collider2D collider)

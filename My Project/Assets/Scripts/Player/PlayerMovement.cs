@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public bool facingRight = true;
     public bool floor = false;
     public bool menuActive = false;
-    bool noseOnFloor = false;
+    //bool noseOnFloor = false;
     public bool movingRight;
     public bool movingLeft;
 
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         SetIsJumping();
        
-        MovePlayer();
+        //MovePlayer();
 
         MovingDirection();
 
@@ -107,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             if (ScoreManager.instance.score >= 4)
             {
                 GetComponent<CharacterController2D>().m_JumpForce = 850f;
-                SceneManager.LoadScene("Level2");
+                UnitySceneManager.LoadScene("Level2");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;
@@ -121,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (ScoreManager.instance.score >= 8)
             {
-                SceneManager.LoadScene("Level3");
+                UnitySceneManager.LoadScene("Level3");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;
@@ -133,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (ScoreManager.instance.score >= 4)
             {
-                SceneManager.LoadScene("Level4");
+                UnitySceneManager.LoadScene("Level4");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;
@@ -181,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
         if (FindObjectOfType<CharacterController2D>().m_Grounded)
         {
             animator.SetBool("IsJumping", false);
-            FindObjectOfType<AudioManager>().Play("Jump");
+            //FindObjectOfType<AudioManager>().Play("Jump");
         }
         else
             animator.SetBool("IsJumping", true);
@@ -214,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
 
     void MovingDirection()
     {
-        
+
     }
 
     void MovePlayer()

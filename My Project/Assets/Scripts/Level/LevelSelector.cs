@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class LevelSelector : MonoBehaviour
 {
     public Canvas canvas;
     public void Select(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        UnitySceneManager.LoadScene(levelName);
         canvas.enabled = false;
     }
 }
