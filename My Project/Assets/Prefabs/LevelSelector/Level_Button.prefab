@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 134880606001006023}
   - component: {fileID: 134880606001006020}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Level_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,9 +200,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: d8823315fa2509c4892f3c559dea5efb, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

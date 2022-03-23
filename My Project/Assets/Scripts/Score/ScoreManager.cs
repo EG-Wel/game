@@ -22,7 +22,6 @@ public class ScoreManager : MonoBehaviour
     {
         if (doorText != null)
         {
-            print("hello");
             // Add points to score
             score += points;
 

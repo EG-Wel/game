@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class LevelManager : MonoBehaviour
+public class Respawn : MonoBehaviour
 {
-    public static LevelManager instance;
+    public static Respawn instance;
 
     public Transform respawnPoint;
     public GameObject playerPrefab;
@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake() => instance = this;
 
-    public void Respawn()
+    public void RespawnPlayer()
     {
         GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
         cam.Follow = player.transform;

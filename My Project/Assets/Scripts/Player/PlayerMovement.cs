@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
+using UnityEngine.UI;
+using UnitySceneManager = UnityEngine.SceneManagement;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -31,8 +32,12 @@ public class PlayerMovement : MonoBehaviour
     public bool movingLeft;
 
     float horizontalMove = 0f;
-    
-    // Update is called once per frame
+    private void Start()
+    {
+        UnitySceneManager.Scene currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        FindObjectOfType<sceneControll>().Scene(currentScene);
+    }
+
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -57,14 +62,17 @@ public class PlayerMovement : MonoBehaviour
 
         WallBuggFix();
 
-        MenuScreen();        
+        MenuScreen();
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("DoorDetection"))
             ScoreManager.instance.Door(collision);
+        if (collision.gameObject.CompareTag("Void"))
+        {
+            collision.gameObject.GetComponent<Canvas>().enabled = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -94,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        controller.Move(horizontalMove * Time.deltaTime, false, jump);
+        jump = false;
         // if player is moving but facing different direction -> Flip player
         if (horizontalMove < 0 && facingRight)
             flip();
@@ -108,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
             if (ScoreManager.instance.score >= 4)
             {
                 GetComponent<CharacterController2D>().m_JumpForce = 850f;
-                UnitySceneManager.LoadScene("Level2");
+                UnitySceneManager.SceneManager.LoadScene("Level02");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;
@@ -122,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (ScoreManager.instance.score >= 8)
             {
-                UnitySceneManager.LoadScene("Level3");
+                UnitySceneManager.SceneManager.LoadScene("Level03");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;
@@ -134,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (ScoreManager.instance.score >= 4)
             {
-                UnitySceneManager.LoadScene("Level4");
+                UnitySceneManager.SceneManager.LoadScene("Level04");
                 controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
                 facingRight = true;
                 floor = false;

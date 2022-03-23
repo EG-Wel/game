@@ -1,16 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class MainMenu : MonoBehaviour
 {
-    public bool toggle = false;
-
-    private void Start()
-    {
-        //gameObject.GetComponent<AudioManager>().Play("Background"); 
-        //FindObjectOfType<AudioManager>().Play("Background");
-    }
+    private bool toggle = true;
 
     public void PlayButton()
     {
@@ -20,8 +13,7 @@ public class MainMenu : MonoBehaviour
             UnitySceneManager.LoadScene("LevelSelector");
     }
 
-    public void Toggle()
-    {
-        toggle = !toggle;
-    }
+    public void Toggle() => toggle = !toggle;
+
+    public void LoadScene(string levelName) => UnitySceneManager.LoadScene(levelName);
 }

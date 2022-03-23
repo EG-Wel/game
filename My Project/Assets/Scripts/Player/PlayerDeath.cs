@@ -32,13 +32,13 @@ public class PlayerDeath : MonoBehaviour
                     player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
                     player.gameObject.GetComponent<PlayerMovement>().enabled = false;
                     GameOverScreen.Setup(int.Parse(coins.text));
-                    timeF = Time.realtimeSinceStartup;
                     print(timeF);
                 }
             }
             player.transform.SetPositionAndRotation(spawn, Quaternion.identity);
             GetComponent<PlayerMovement>().facingRight = true;
             FindObjectOfType<AudioManager>().Play("Death");
+            timeF = Time.realtimeSinceStartup;
         }
     }
 }
