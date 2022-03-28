@@ -12,11 +12,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Uitleg.unity
     guid: 354d6890501d44e49b0571afbe868515
   - enabled: 1
+    path: Assets/Scenes/UitlegLevel.unity
+    guid: 1c3ef858314242e4c9b9ebcd480ce43f
+  - enabled: 1
     path: Assets/Scenes/LevelSelector.unity
     guid: 8b7ff171ab43c244ba79b41f2613c52e
   - enabled: 1
     path: Assets/Scenes/Level01.unity
-    guid: 1c3ef858314242e4c9b9ebcd480ce43f
+    guid: d3f5b88684d5b88419261893e0e0cc13
   - enabled: 1
     path: Assets/Scenes/Level02.unity
     guid: dc6bf70ec4ba5ee4887fb7ba96f03a66

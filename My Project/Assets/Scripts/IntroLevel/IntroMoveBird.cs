@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveBird : MonoBehaviour
+public class IntroMoveBird : MonoBehaviour
 {
     public Rigidbody2D birdRigidbody2d;
 
@@ -14,11 +13,11 @@ public class MoveBird : MonoBehaviour
     public bool useRandomSpeed;
     public bool useRandomDistance;
 
-    [Header ("===Random Speed Values===")]
+    [Header("===Random Speed Values===")]
     public int randomSpeedMin = 3;
     public int randomSpeedMax = 11;
 
-    [Header ("===Random Distance Values===")]
+    [Header("===Random Distance Values===")]
     public int randomDistanceMin = 1;
     public int randomDistanceMax = 6;
 
@@ -35,7 +34,7 @@ public class MoveBird : MonoBehaviour
         if (useRandomSpeed)
         {
             speed = Random.Range(randomSpeedMin, randomSpeedMax);
-           
+
             if (direction == 1)
                 birdRigidbody2d.velocity = new Vector2(speed, 0);
             else
@@ -65,9 +64,29 @@ public class MoveBird : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.GetComponentInChildren<Canvas>().GetComponent<Canvas>().enabled = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.GetComponentInChildren<Canvas>().GetComponent<Canvas>().enabled = false;
+        }
+    }
     void Flip()
     {
         facingRight = !facingRight;
         gameObject.GetComponent<SpriteRenderer>().flipX = !facingRight;
+    }
+
+    IEnumerator BirdText()
+    {
+        yield return new WaitForSecondsRealtime(5);
+        gameObject.GetComponentInChildren<Canvas>().GetComponent<Canvas>().enabled = false;
     }
 }

@@ -45,7 +45,6 @@ public class MovePlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isJumping)
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 10;
-            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce = 950;
         }
     }
 
@@ -54,7 +53,6 @@ public class MovePlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 2;
-            collision.gameObject.GetComponent<CharacterController2D>().m_JumpForce = 850;
         }
     }
 

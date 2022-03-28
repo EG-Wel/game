@@ -8121,9 +8121,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1811071119797002721, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071119829723930, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071119829723931, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120235129514, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120235129514, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120235129515, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120590191018, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: orthographic size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1811071120590191021, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19161129
+      value: 0.19841766
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120590191021, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9292.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071120915098623, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811071121103810687, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1811071121126026446, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_RootOrder
@@ -8177,6 +8217,14 @@ PrefabInstance:
       propertyPath: doorText
       value: 
       objectReference: {fileID: 1136155489}
+    - target: {fileID: 1811071121512774327, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889815597365948816, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
 --- !u!1001 &2079222504

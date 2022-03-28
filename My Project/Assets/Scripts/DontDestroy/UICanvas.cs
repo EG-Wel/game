@@ -10,24 +10,15 @@ public class UICanvas : MonoBehaviour
     public GameObject Level02;
     public GameObject Level03;
     public GameObject Level04;
-
     public Scene currentScene;
-    
+
     public int hearts;
-
-    public bool[] scenes;
-
     public bool scene02 = false;
     public bool scene03 = false;
     public bool scene04 = false;
 
     void Start()
     {
-        //DontDestroyOnLoad(gameObject);
-        foreach (bool scene in scenes)
-        {
-
-        }
         scene02 = FindObjectOfType<sceneControll>().s2;
         scene03 = FindObjectOfType<sceneControll>().s3;
         scene04 = FindObjectOfType<sceneControll>().s4;

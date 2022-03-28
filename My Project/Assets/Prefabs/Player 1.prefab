@@ -142,7 +142,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1585154951
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: 420
   m_Sprite: {fileID: 21300000, guid: 0da3ec85ea5834e428166333dbb1195a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3488526d3893694a9d2485a6a371834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 650
+  m_JumpForce: 10
   m_CrouchSpeed: 1
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -176,7 +176,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_GroundCheck: {fileID: 1124756783783418679}
   m_CeilingCheck: {fileID: 1124756782694740650}
-  m_CrouchDisableCollider: {fileID: 0}
+  m_Grounded: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -216,16 +216,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9759a543794c224448e300b93f4db4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRb: {fileID: 1124756782336871805}
+  menuScreen: {fileID: 0}
   controller: {fileID: 1124756782336871802}
   animator: {fileID: 1124756782336871799}
   door2: {x: 47.5, y: 0, z: 0}
   spawn: {x: 0, y: 0, z: 0}
+  circleCollider: {fileID: 0}
+  cam: {fileID: 0}
+  coyoteTimeCounter: 0
   runSpeed: 35
   isJumping: 0
   stopMovement: 0
-  horizontalMove: 0
-  jump: 0
   facingRight: 1
+  floor: 0
+  menuActive: 0
+  movingRight: 0
+  movingLeft: 0
+  jumpTime: 0
+  jumpCounter: 0
 --- !u!95 &1124756782336871799
 Animator:
   serializedVersion: 3
@@ -264,6 +273,7 @@ MonoBehaviour:
   heart2: {fileID: 0}
   heart3: {fileID: 0}
   coins: {fileID: 0}
+  death: 0
 --- !u!122 &4693840336515585264
 Halo:
   m_ObjectHideFlags: 0
@@ -299,8 +309,8 @@ MonoBehaviour:
   - {fileID: 1124756783092113950}
   - {fileID: 1124756783052110516}
   m_Bounds:
-    m_Center: {x: -0.2085948, y: 0.21962023, z: 0}
-    m_Extent: {x: 1.7927232, y: 2.1598296, z: 0}
+    m_Center: {x: -0.2085948, y: 0.21962094, z: 0}
+    m_Extent: {x: 1.7927251, y: 2.1598296, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!61 &8131435836178266062
