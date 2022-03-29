@@ -1,12 +1,41 @@
+/*using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
+public class testMove : MonoBehaviour
+{
+    public aaaTest controller;
+    float horizontalMove;
+    bool jump = false;
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown("Jump"))
+            jump = true;
+    }
+
+    private void FixedUpdate()
+    {
+        controller.Move(horizontalMove, false, jump);
+        jump = false;
+    }
+}
+*/using UnityEngine;
 using UnitySceneManager = UnityEngine.SceneManagement;
 
 
-public class PlayerMovement : MonoBehaviour
+public class testMove : MonoBehaviour
 {
     public Rigidbody2D playerRb;
     public GameObject menuScreen;
-    public CharacterController2D controller;
+    public aaaTest controller;
     public Animator animator;
     public Vector3 door2;
     public Vector3 spawn;
@@ -26,16 +55,17 @@ public class PlayerMovement : MonoBehaviour
     public bool menuActive = false;
     public bool movingRight;
     public bool movingLeft;
-    public float jumpTime; 
+    public float jumpTime;
 
     private bool isGrounded;
     public float jumpCounter;
     float horizontalMove = 0f;
-    private bool m_FacingRight = true;
+    bool jump = false;
 
     private void Start()
     {
         UnitySceneManager.Scene currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        //FindObjectOfType<sceneControll>().Scene(currentScene);
     }
 
     void Update()
@@ -43,18 +73,18 @@ public class PlayerMovement : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
 
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        
-        isGrounded = GetComponent<CharacterController2D>().m_Grounded;
 
-        DraggUpdate(playerRb);
+        /*isGrounded = GetComponent<CharacterController2D>().m_Grounded;
+
+        JumpingAnim();
 
         SetIsJumping();
 
-        WalkingAnim();
-        
         CoyoteTime();
 
-        JumpingAnim();
+        WalkingAnim();*/
+
+        DraggUpdate(playerRb);
 
         MenuScreen();
 
@@ -62,12 +92,20 @@ public class PlayerMovement : MonoBehaviour
 
         Dive();
 
-        
+        if (Input.GetButtonDown("Jump"))
+            jump = true;
     }
 
     private void FixedUpdate()
     {
-        controller.Move(horizontalMove * Time.deltaTime);
+        controller.Move(horizontalMove * Time.deltaTime, false, jump);
+        jump = false;
+
+        if (horizontalMove > 0 && !facingRight)
+            flip();
+
+        if (horizontalMove < 0 && facingRight)
+            flip();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -118,25 +156,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Flip()
+    void flip()
     {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
-
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    /*transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);*/
-    /*Vector3 currentScale = rotate.transform.localScale;
-    currentScale.x = currentScale.x * -1;
-    rotate.transform.localScale = currentScale;
-    facingRight = !facingRight;*/
-    /*if (playerRb.velocity.x > 0)
-        gameObject.transform.Rotate(0f, 180f, 0f);
-    else if (playerRb.velocity.x < 0)
-        gameObject.transform.Rotate(0f, 0f, 0f);*/
-}
+        /*transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);*/
+        /*Vector3 currentScale = rotate.transform.localScale;
+        currentScale.x = currentScale.x * -1;
+        rotate.transform.localScale = currentScale;
+        facingRight = !facingRight;*/
+        /*if (playerRb.velocity.x > 0)
+            gameObject.transform.Rotate(0f, 180f, 0f);
+        else if (playerRb.velocity.x < 0)
+            gameObject.transform.Rotate(0f, 0f, 0f);*/
+    }
 
     void DraggUpdate(Rigidbody2D rb)
     {
@@ -212,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
             playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
             //playerRb.velocity = Vector2.up * GetComponent<CharacterController2D>().m_JumpForce;
         }
-        
+
         jumpCounter -= Time.deltaTime;
 
         if (Input.GetButton("Jump") && isJumping)
@@ -236,9 +267,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButton("Down") && isJumping)
         {
             playerRb.drag = 0f;
-            //animator.SetBool("IsDiving", true);
+            animator.SetBool("IsDiving", true);
         }
-        //if (Input.GetButtonUp("Down"))
-        //    animator.SetBool("IsDiving", false);
+        if (Input.GetButtonUp("Down"))
+            animator.SetBool("IsDiving", false);
     }
 }

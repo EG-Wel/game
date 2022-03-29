@@ -1240,7 +1240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811071120590191014}
   m_LocalRotation: {x: -0, y: -0, z: -0.0000012265051, w: 1}
-  m_LocalPosition: {x: -0.0000019073486, y: -0.7725136, z: 9292.83}
+  m_LocalPosition: {x: -0.0000019073486, y: -0.77251494, z: 9292.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1811071119829723930}
@@ -3165,7 +3165,7 @@ PrefabInstance:
       objectReference: {fileID: 4594306986216373439}
     - target: {fileID: 1124756782336871802, guid: fb9e6b9aea731624f8de10f4e144ca8c, type: 3}
       propertyPath: m_JumpForce
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1124756782336871802, guid: fb9e6b9aea731624f8de10f4e144ca8c, type: 3}
       propertyPath: m_WhatIsGround.m_Bits
@@ -3249,7 +3249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7439304045905076605, guid: fb9e6b9aea731624f8de10f4e144ca8c, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.21962094
+      value: 0.21962047
       objectReference: {fileID: 0}
     - target: {fileID: 7439304045905076605, guid: fb9e6b9aea731624f8de10f4e144ca8c, type: 3}
       propertyPath: m_Bounds.m_Extent.x

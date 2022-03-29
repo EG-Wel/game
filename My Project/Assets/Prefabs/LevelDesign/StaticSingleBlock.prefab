@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2148739657893627995}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StaticSingleBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 2148739658186067515}
   - component: {fileID: 2148739658186067517}
   - component: {fileID: 2148739658186067516}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Grass
   m_TagString: Wall
   m_Icon: {fileID: 0}

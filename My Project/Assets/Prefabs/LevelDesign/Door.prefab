@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7918231937184076929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door
   m_TagString: DoorDetection
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7918231937199586566}
   - component: {fileID: 7918231937199586564}
   - component: {fileID: 7918231937199586565}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Aantal_Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 7918231938468427973}
   - component: {fileID: 7918231938468427974}
   - component: {fileID: 7918231938468427975}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

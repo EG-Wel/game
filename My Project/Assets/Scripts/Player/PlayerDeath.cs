@@ -12,7 +12,6 @@ public class PlayerDeath : MonoBehaviour
     public GameObject heart1;
     public GameObject heart2;
     public GameObject heart3;
-    public Text coins;
 
     float timeF;
     public int death = 0;
@@ -31,7 +30,7 @@ public class PlayerDeath : MonoBehaviour
                 {
                     player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
                     player.gameObject.GetComponent<PlayerMovement>().enabled = false;
-                    GameOverScreen.Setup(int.Parse(coins.text));
+                    GameOverScreen.Setup(FindObjectOfType<ScoreManager>().score);
                     print(timeF);
                 }
             }

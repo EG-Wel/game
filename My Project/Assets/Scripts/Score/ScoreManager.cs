@@ -11,6 +11,8 @@ public class ScoreManager : MonoBehaviour
     public Text doorText;
     public int score;
 
+    private string addString;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,22 +32,15 @@ public class ScoreManager : MonoBehaviour
 
             // Check what door/lvl player is on
             // Display points above door
-            if (doorText.name == "Aantal_Fish_lvl1")
-                doorText.text = score.ToString() + "/4";
+            if (FindObjectOfType<sceneControll>().lvl[0])
+                addString = "/4";
+            if (FindObjectOfType<sceneControll>().lvl[1])
+                addString = "/8";
+            if (FindObjectOfType<sceneControll>().lvl[2])
+                addString = "/4";
 
-            if (doorText.name == "Aantal_Fish_lvl2")
-                doorText.text = score.ToString() + "/8";
-
-            if (doorText.name == "Aantal_Fish_lvl3")
-                doorText.text = score.ToString() + "/4";
+            text.text = score.ToString() + addString;
+            doorText.text = text.text;
         }
-    }
-
-    public void Door(Collider2D collider)
-    {
-        if (collider.gameObject.name == "Door")
-            doorText = collider.gameObject.GetComponent<DoorText>().text;
-
-        ChangeScore(0);
     }
 }
