@@ -3,16 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class sceneControll : MonoBehaviour
 {
-    public bool[] lvl;
+    public static sceneControll instance;
+    public bool[] lvl = new bool[15];
 
-
-    private void Start() => DontDestroyOnLoad(this);
+    private void Start()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     public void Scene(Scene currentScene)
     {
+        print(currentScene.name);
         for (int i = 0; i < lvl.Length; i++)
         {
-            if (currentScene.name == $"Level0{i+1}")
+            if (currentScene.name == $"Level0{i + 1}")
                 lvl[i] = true;
         }
     }

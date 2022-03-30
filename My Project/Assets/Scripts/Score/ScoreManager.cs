@@ -32,11 +32,11 @@ public class ScoreManager : MonoBehaviour
 
             // Check what door/lvl player is on
             // Display points above door
-            if (FindObjectOfType<sceneControll>().lvl[0])
+            if (sceneControll.instance.lvl[0])
                 addString = "/4";
-            if (FindObjectOfType<sceneControll>().lvl[1])
+            if (sceneControll.instance.lvl[1])
                 addString = "/8";
-            if (FindObjectOfType<sceneControll>().lvl[2])
+            if (sceneControll.instance.lvl[2])
                 addString = "/4";
 
             text.text = score.ToString() + addString;

@@ -4,38 +4,34 @@ using UnitySceneManager = UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Window_QuestPointer wind;
     public Rigidbody2D playerRb;
     public GameObject menuScreen;
     public CharacterController2D controller;
     public Animator animator;
-    public Vector3 door2;
-    public Vector3 spawn;
     public CircleCollider2D circleCollider;
     public Cinemachine.CinemachineVirtualCamera cam;
-    public Transform rotate;
-    public Canvas canvasDeur;
+
+    public Vector3 fishPositsion;
 
     float coyoteTime = 0.15f;
     public float coyoteTimeCounter;
 
     public float runSpeed = 40f;
     public bool isJumping = false;
-    public bool stopMovement = false;
     public bool facingRight = true;
-    public bool floor = false;
     public bool menuActive = false;
-    public bool movingRight;
-    public bool movingLeft;
     public float jumpTime; 
 
-    private bool isGrounded;
     public float jumpCounter;
     float horizontalMove = 0f;
-    private bool m_FacingRight = true;
 
     private void Start()
     {
         UnitySceneManager.Scene currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        //FindObjectOfType<sceneControll>().Scene(currentScene);
+        sceneControll.instance.Scene(currentScene);
+        wind.Show(fishPositsion);
     }
 
     void Update()
@@ -43,32 +39,21 @@ public class PlayerMovement : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
 
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        
-        isGrounded = GetComponent<CharacterController2D>().m_Grounded;
+
+        isJumping = !GetComponent<CharacterController2D>().m_Grounded;
 
         DraggUpdate(playerRb);
-
-        SetIsJumping();
-
-        WalkingAnim();
-        
         CoyoteTime();
-
-        JumpingAnim();
-
         MenuScreen();
-
         HoldJump();
-
         Dive();
+        Animatior();
 
-        
+        //wind.Show(new Vector3(0,0,0));
     }
 
-    private void FixedUpdate()
-    {
-        controller.Move(horizontalMove * Time.deltaTime);
-    }
+    private void FixedUpdate() => controller.Move(horizontalMove * Time.deltaTime);
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Door"))
@@ -80,96 +65,41 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.name == "Door_1-2")
         {
             if (ScoreManager.instance.score >= 4)
-            {
-                UnitySceneManager.SceneManager.LoadScene("Level02");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                cam.m_Lens.OrthographicSize = 8;
-                cam.m_Lens.NearClipPlane = -20;
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
-            else
-                canvasDeur.GetComponent<Canvas>().enabled = true;
+                Door("Level02");
         }
 
         if (collision.gameObject.name == "Door_2-3")
         {
             if (ScoreManager.instance.score >= 8)
-            {
-                UnitySceneManager.SceneManager.LoadScene("Level03");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
+                Door("Level03");
         }
 
         if (collision.gameObject.name == "Door_3-4")
         {
             if (ScoreManager.instance.score >= 4)
-            {
-                UnitySceneManager.SceneManager.LoadScene("Level04");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
+                Door("Level04");
+        }
+
+        void Door(string level)
+        {
+            UnitySceneManager.SceneManager.LoadScene(level);
+            controller.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+            facingRight = true;
+            FindObjectOfType<AudioManager>().Play("Door");
         }
     }
 
-    void Flip()
-    {
-        // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
-
-        // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    /*transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);*/
-    /*Vector3 currentScale = rotate.transform.localScale;
-    currentScale.x = currentScale.x * -1;
-    rotate.transform.localScale = currentScale;
-    facingRight = !facingRight;*/
-    /*if (playerRb.velocity.x > 0)
-        gameObject.transform.Rotate(0f, 180f, 0f);
-    else if (playerRb.velocity.x < 0)
-        gameObject.transform.Rotate(0f, 0f, 0f);*/
-}
-
+    // If player falling drag increases so it looks like he is gliding
     void DraggUpdate(Rigidbody2D rb)
     {
-        // When player falling drag increases so it looks like he is gliding
+        
         if (rb.velocity.y < 0)
             rb.drag = 5f;
         else
             rb.drag = 0f;
 
-        if (isGrounded)
+        if (!isJumping)
             rb.drag = 0f;
-    }
-
-    // If player is moving -> play running animation
-    // Else stop animation
-    void WalkingAnim()
-    {
-        if (horizontalMove != 0)
-            animator.SetFloat("IsRunning", 1f);
-        else
-            animator.SetFloat("IsRunning", 0f);
-    }
-
-
-    void SetIsJumping() => isJumping = !GetComponent<CharacterController2D>().m_Grounded;
-
-    // Wanneer player jumped show jump animation
-    void JumpingAnim()
-    {
-        if (FindObjectOfType<CharacterController2D>().m_Grounded)
-            animator.SetBool("IsJumping", false);
-        else
-            animator.SetBool("IsJumping", true);
     }
 
     // CoyoteTime
@@ -205,12 +135,11 @@ public class PlayerMovement : MonoBehaviour
     // springt de player hoger
     void HoldJump()
     {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (!isJumping && Input.GetButtonDown("Jump"))
         {
             isJumping = true;
             jumpCounter = jumpTime;
             playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
-            //playerRb.velocity = Vector2.up * GetComponent<CharacterController2D>().m_JumpForce;
         }
         
         jumpCounter -= Time.deltaTime;
@@ -218,9 +147,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButton("Jump") && isJumping)
         {
             if (jumpCounter > 0)
-            {
                 playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
-            }
             else
                 isJumping = false;
         }
@@ -234,11 +161,35 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Down") && isJumping)
             playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y - 1f);
         if (Input.GetButton("Down") && isJumping)
-        {
             playerRb.drag = 0f;
-            //animator.SetBool("IsDiving", true);
-        }
-        //if (Input.GetButtonUp("Down"))
-        //    animator.SetBool("IsDiving", false);
+    }
+
+    // Alle animaties
+    void Animatior()
+    {
+        // If user is holding down button player dives
+        if (Input.GetButton("Down") && isJumping)
+            animator.SetBool("IsDiving", true);
+
+        if (Input.GetButtonUp("Down"))
+            animator.SetBool("IsDiving", false);
+
+        // Wanneer player jumped show jump animation
+        if (FindObjectOfType<CharacterController2D>().m_Grounded)
+            animator.SetBool("IsJumping", false);
+        else
+            animator.SetBool("IsJumping", true);
+
+        // If player is moving -> play running animation
+        // Else stop animation
+        if (horizontalMove != 0)
+            animator.SetFloat("IsRunning", 1f);
+        else
+            animator.SetFloat("IsRunning", 0f);
+
+        if (horizontalMove > 0)
+            animator.SetBool("FacingRight", true);
+        if (horizontalMove < 0)
+            animator.SetBool("FacingRight", false);
     }
 }

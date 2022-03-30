@@ -57,7 +57,6 @@ public class testMove : MonoBehaviour
     public bool movingLeft;
     public float jumpTime;
 
-    private bool isGrounded;
     public float jumpCounter;
     float horizontalMove = 0f;
     bool jump = false;
@@ -177,7 +176,7 @@ public class testMove : MonoBehaviour
         else
             rb.drag = 0f;
 
-        if (isGrounded)
+        if (!isJumping)
             rb.drag = 0f;
     }
 
@@ -236,7 +235,7 @@ public class testMove : MonoBehaviour
     // springt de player hoger
     void HoldJump()
     {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (!isJumping && Input.GetButtonDown("Jump"))
         {
             isJumping = true;
             jumpCounter = jumpTime;

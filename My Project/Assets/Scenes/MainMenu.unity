@@ -1203,6 +1203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneControll
       objectReference: {fileID: 0}
+    - target: {fileID: 5239292417790816405, guid: c116b86a45d1c1248b8f61f917d7de4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5239292417790816406, guid: c116b86a45d1c1248b8f61f917d7de4b, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1253,7 +1257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239292417790816407, guid: c116b86a45d1c1248b8f61f917d7de4b, type: 3}
       propertyPath: lvl.Array.data[0]
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5239292417790816407, guid: c116b86a45d1c1248b8f61f917d7de4b, type: 3}
       propertyPath: lvl.Array.data[1]
@@ -1319,6 +1323,10 @@ PrefabInstance:
     - target: {fileID: 6951589475461014210, guid: a8cd6efa0d80af74ea05bb9be12fc73a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951589475461014211, guid: a8cd6efa0d80af74ea05bb9be12fc73a, type: 3}
+      propertyPath: sounds.Array.data[0].loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6951589475461014220, guid: a8cd6efa0d80af74ea05bb9be12fc73a, type: 3}
       propertyPath: m_Name

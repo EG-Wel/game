@@ -1,15 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UICanvas : MonoBehaviour
 {
+    public static UICanvas instance;
     public GameObject[] Levels;
-    public bool[] lvl;
+    bool[] lvl;
 
-    void Start() => lvl = FindObjectOfType<sceneControll>().lvl;
+    void Start()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     private void FixedUpdate()
     {
+        lvl = sceneControll.instance.lvl;
+        lvl[0] = true;
         for (int i = 0; i < lvl.Length; i++)
         {
             if (lvl[i])
@@ -18,4 +26,6 @@ public class UICanvas : MonoBehaviour
                 Levels[i].GetComponent<Button>().interactable = false;
         }
     }
+
+    
 }
