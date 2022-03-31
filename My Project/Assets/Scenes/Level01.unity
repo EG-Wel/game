@@ -10123,6 +10123,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 288818748, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
+      propertyPath: isOffScreen
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6021528021518775636, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_Name
       value: Keep
@@ -10181,12 +10185,16 @@ PrefabInstance:
       objectReference: {fileID: 1954291290}
     - target: {fileID: 6021528023130415158, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.77250516
+      value: -0.77247965
       objectReference: {fileID: 0}
     - target: {fileID: 6021528023286013485, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: deur
       value: 
       objectReference: {fileID: 1181111917}
+    - target: {fileID: 6021528023286013485, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
+      propertyPath: fishs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6021528023286013485, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: fishs.Array.data[0]
       value: 

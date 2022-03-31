@@ -1,20 +1,20 @@
 using UnityEngine;
 using UnitySceneManager = UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Window_QuestPointer wind;
+    [SerializeField] private Window_QuestPointer wind;
     public Rigidbody2D playerRb;
     public GameObject menuScreen;
     public CharacterController2D controller;
     public Animator animator;
     public CircleCollider2D circleCollider;
     public Cinemachine.CinemachineVirtualCamera cam;
-    public GameObject deur;
+
+    public Vector3 fishPositsion;
+
+    public GameObject[] fishs;
 
     float coyoteTime = 0.15f;
     public float coyoteTimeCounter;
@@ -25,13 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public bool menuActive = false;
     public float jumpTime;
 
-    public GameObject[] fishs;
-
     public float jumpCounter;
     float horizontalMove = 0f;
-    private GameObject closest;
+    public GameObject deur;
 
-    private UnitySceneManager.Scene currentScene;
+    public GameObject closest;
+    public UnitySceneManager.Scene currentScene;
 
     private void Start()
     {
@@ -39,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         //FindObjectOfType<sceneControll>().Scene(currentScene);
         sceneControll.instance.Scene(currentScene);
         closest = fishs[0];
+        
     }
 
     void Update()
@@ -56,18 +56,10 @@ public class PlayerMovement : MonoBehaviour
         Dive();
         Animatior();
         FishClose();
-
         //wind.Show(new Vector3(0,0,0));
-        if (Input.GetButtonDown("Jump"))
-        {
-            wind.targetPosition = new Vector3(25, 6, 0);
-        }
     }
 
-    private void FixedUpdate()
-    {
-        controller.Move(horizontalMove * Time.deltaTime);
-    }
+    private void FixedUpdate() => controller.Move(horizontalMove * Time.deltaTime);
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -107,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
     // If player falling drag increases so it looks like he is gliding
     void DraggUpdate(Rigidbody2D rb)
     {
-        
+
         if (rb.velocity.y < 0)
             rb.drag = 5f;
         else
@@ -156,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = jumpTime;
             playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
         }
-        
+
         jumpCounter -= Time.deltaTime;
 
         if (Input.GetButton("Jump") && isJumping)
@@ -210,17 +202,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void FishClose()
     {
+        closest = fishs[0];
         foreach (GameObject fish in fishs)
         {
             if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
             {
-                if (ScoreManager.instance.Enough(currentScene))
-                    closest = deur;
-                else
+                if (!ScoreManager.instance.Enough(currentScene))
+                {
                     closest = fish;
+
+                }
+                else
+                    closest = deur;
             }
         }
-        print(closest);
+        print(closest.transform.position);
         wind.Show(closest.transform.position);
+
+        /*for (int i = 0; i < fishs.Length; i++)
+        {
+            if (Vector3.Distance(fishs[i].transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+            {
+                closest = fishs[i];
+                print(closest.transform.position);
+                if (ScoreManager.instance.Enough(currentScene))
+                    closest = deur;
+            }
+        }
+        wind.Show(closest.transform.position);*/
     }
 }

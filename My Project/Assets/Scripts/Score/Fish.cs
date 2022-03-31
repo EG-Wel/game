@@ -11,11 +11,11 @@ public class Fish : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //Destroy(fish.gameObject);
-            FindObjectOfType<ScoreManager>().ChangeScore(1);
+            print("wtf");
             fish.transform.position = collision.GetComponent<PlayerMovement>().deur.transform.position;
-            FindObjectOfType<AudioManager>().Play("Fish");
-            fish.SetActive(false);
+            //FindObjectOfType<AudioManager>().Play("Fish");
+            fish.gameObject.SetActive(false);
+            ScoreManager.instance.ChangeScore(1);
         }
     }
 }
