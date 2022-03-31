@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnitySceneManager = UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Window_QuestPointer wind;
+    public Window_QuestPointer wind;
     public Rigidbody2D playerRb;
     public GameObject menuScreen;
     public CharacterController2D controller;
     public Animator animator;
     public CircleCollider2D circleCollider;
     public Cinemachine.CinemachineVirtualCamera cam;
-
-    public Vector3 fishPositsion;
+    public GameObject deur;
 
     float coyoteTime = 0.15f;
     public float coyoteTimeCounter;
@@ -21,17 +23,22 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumping = false;
     public bool facingRight = true;
     public bool menuActive = false;
-    public float jumpTime; 
+    public float jumpTime;
+
+    public GameObject[] fishs;
 
     public float jumpCounter;
     float horizontalMove = 0f;
+    private GameObject closest;
+
+    private UnitySceneManager.Scene currentScene;
 
     private void Start()
     {
-        UnitySceneManager.Scene currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        currentScene = UnitySceneManager.SceneManager.GetActiveScene();
         //FindObjectOfType<sceneControll>().Scene(currentScene);
         sceneControll.instance.Scene(currentScene);
-        wind.Show(fishPositsion);
+        closest = fishs[0];
     }
 
     void Update()
@@ -48,11 +55,19 @@ public class PlayerMovement : MonoBehaviour
         HoldJump();
         Dive();
         Animatior();
+        FishClose();
 
         //wind.Show(new Vector3(0,0,0));
+        if (Input.GetButtonDown("Jump"))
+        {
+            wind.targetPosition = new Vector3(25, 6, 0);
+        }
     }
 
-    private void FixedUpdate() => controller.Move(horizontalMove * Time.deltaTime);
+    private void FixedUpdate()
+    {
+        controller.Move(horizontalMove * Time.deltaTime);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -191,5 +206,21 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("FacingRight", true);
         if (horizontalMove < 0)
             animator.SetBool("FacingRight", false);
+    }
+
+    private void FishClose()
+    {
+        foreach (GameObject fish in fishs)
+        {
+            if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+            {
+                if (ScoreManager.instance.Enough(currentScene))
+                    closest = deur;
+                else
+                    closest = fish;
+            }
+        }
+        print(closest);
+        wind.Show(closest.transform.position);
     }
 }

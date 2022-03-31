@@ -6,49 +6,60 @@ using CodeMonkey.Utils;
 
 public class Window_QuestPointer : MonoBehaviour {
 
-    [SerializeField] private Camera uiCamera;/*
-    [SerializeField] private Sprite arrowSprite;
-    [SerializeField] private Sprite crossSprite;*/
+    [SerializeField] private Camera uiCamera;
 
-    private Vector3 targetPosition;
-    private RectTransform pointerRectTransform;
+    public Vector3 targetPosition;
+    public RectTransform pointerRectTransform;
     private Image pointerImage;
+
+
+
+    public Vector3 targetPositionScreenPoint;
+    public bool isOffScreen;
+    public Vector3 cappedTargetScreenPosition;
+    public Vector3 pointerWorldPosition;
+
+
+
+
 
     private void Awake() {
         pointerRectTransform = transform.Find("Pointer").GetComponent<RectTransform>();
         pointerImage = transform.Find("Pointer").GetComponent<Image>();
 
-        //Hide();
     }
 
     private void Update() {
-        float borderSize = 100f;
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
-        bool isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
-/*
-        if (isOffScreen) {*/
+        float borderSize = 250f;
+        targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
+        isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
+
+        if (isOffScreen)
+        {            
             RotatePointerTowardsTargetPosition();
 
-            //pointerImage.sprite = arrowSprite;
-            Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
+            pointerImage.enabled = true;
+            cappedTargetScreenPosition = targetPositionScreenPoint;
             if (cappedTargetScreenPosition.x <= borderSize) cappedTargetScreenPosition.x = borderSize;
             if (cappedTargetScreenPosition.x >= Screen.width - borderSize) cappedTargetScreenPosition.x = Screen.width - borderSize;
             if (cappedTargetScreenPosition.y <= borderSize) cappedTargetScreenPosition.y = borderSize;
             if (cappedTargetScreenPosition.y >= Screen.height - borderSize) cappedTargetScreenPosition.y = Screen.height - borderSize;
 
-            Vector3 pointerWorldPosition = uiCamera.ScreenToWorldPoint(cappedTargetScreenPosition);
+            pointerWorldPosition = uiCamera.ScreenToWorldPoint(cappedTargetScreenPosition);
             pointerRectTransform.position = pointerWorldPosition;
+            //print(new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f));
             pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-        /*}*/
-        /*else
+    }
+        else
         {
-            pointerImage.sprite = crossSprite;
-            Vector3 pointerWorldPosition = uiCamera.ScreenToWorldPoint(targetPositionScreenPoint);
+            pointerImage.enabled = false;
+            pointerWorldPosition = uiCamera.ScreenToWorldPoint(targetPositionScreenPoint);
             pointerRectTransform.position = pointerWorldPosition;
+            //print(new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f));
             pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
 
             pointerRectTransform.localEulerAngles = Vector3.zero;
-        }*/
+        }
     }
 
     private void RotatePointerTowardsTargetPosition() {
@@ -60,12 +71,10 @@ public class Window_QuestPointer : MonoBehaviour {
         pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
 
-    public void Hide() {
-        gameObject.SetActive(false);
-    }
-
-    public void Show(Vector3 targetPosition) {
-        gameObject.SetActive(true);
+    public void Show(Vector3 targetPosition)
+    {
+        //this.gameObject.SetActive(true);
         this.targetPosition = targetPosition;
+        //print("dsaf");
     }
 }
