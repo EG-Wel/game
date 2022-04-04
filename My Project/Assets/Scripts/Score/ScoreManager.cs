@@ -14,6 +14,7 @@ public class ScoreManager : MonoBehaviour
     private int lvl3 = 2;
     private int lvl4 = 3;
 
+    public Scene currentScene;
 
     private string addString;
 
@@ -36,38 +37,30 @@ public class ScoreManager : MonoBehaviour
 
             // Check what door/lvl player is on
             // Display points above door
-            if (sceneControll.instance.lvl[lvl1])
+            if (currentScene.name == "Level01")
                 addString = "/4";
-            if (sceneControll.instance.lvl[lvl2])
+            if (currentScene.name == "Level02")
                 addString = "/8";
-            if (sceneControll.instance.lvl[lvl3])
+            if (currentScene.name == "Level03")
                 addString = "/4";
-            if (sceneControll.instance.lvl[lvl4])
+            if (currentScene.name == "Level04")
                 addString = "/5";
 
             text.text = score.ToString() + addString;
             doorText.text = text.text;
-            //print(score);
         }
     }
 
     public bool Enough(Scene scene)
     {
         if (scene.name == "Level01" && doorText.text == "4/4")
-        {
-            print(score);
             return true;
-
-        }
         else if (scene.name == "Level02" && doorText.text == "8/8")
-        {
-            print(score);
             return true;
-        }
         else if (scene.name == "Level03" && doorText.text == "4/4")
-                return true;
+            return true;
         else if (scene.name == "Level04" && doorText.text == "5/5")
-                return true;
+            return true;
         else
             return false;
     }

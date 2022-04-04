@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class MainMenu : MonoBehaviour
@@ -15,5 +16,17 @@ public class MainMenu : MonoBehaviour
 
     public void Toggle() => toggle = !toggle;
 
-    public void LoadScene(string levelName) => UnitySceneManager.LoadScene(levelName);
+    public void LoadScene(string levelName)
+    {
+        if (levelName == "Back")
+        {
+
+        }
+        else if(levelName == "Next")
+        {
+            
+        }
+        else
+            UnitySceneManager.LoadScene(levelName);
+    }
 }

@@ -240,7 +240,6 @@ public class testMove : MonoBehaviour
             isJumping = true;
             jumpCounter = jumpTime;
             playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
-            //playerRb.velocity = Vector2.up * GetComponent<CharacterController2D>().m_JumpForce;
         }
 
         jumpCounter -= Time.deltaTime;
@@ -248,9 +247,7 @@ public class testMove : MonoBehaviour
         if (Input.GetButton("Jump") && isJumping)
         {
             if (jumpCounter > 0)
-            {
                 playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
-            }
             else
                 isJumping = false;
         }

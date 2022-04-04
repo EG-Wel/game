@@ -50,12 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCamera: {fileID: 6021528023130415153}
-  targetPosition: {x: 0, y: 0, z: 0}
   pointerRectTransform: {fileID: 474229877}
-  targetPositionScreenPoint: {x: 0, y: 0, z: 0}
-  isOffScreen: 0
-  cappedTargetScreenPosition: {x: 0, y: 0, z: 0}
-  pointerWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &474229876
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +116,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9313547624ac5ad4f859f9b6feba896e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aabf113a072c5a645bd333fc27046cbc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -724,7 +719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811071120590191021, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.77255046
+      value: -0.7725495
       objectReference: {fileID: 0}
     - target: {fileID: 1811071120590191021, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_LocalPosition.z
@@ -792,7 +787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811071121126026447, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_Name
-      value: Keep
+      value: KeepLvl1
       objectReference: {fileID: 0}
     - target: {fileID: 1811071121214984696, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: m_LocalPosition.x

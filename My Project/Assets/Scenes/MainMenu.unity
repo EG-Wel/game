@@ -385,7 +385,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1635493534}
   toggleTransition: 1
   graphic: {fileID: 230826190}
@@ -1131,7 +1131,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 439243374714889746, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: m_Name
-      value: LevelSelectionManager
+      value: LevelInfo
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889746, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: m_IsActive
@@ -1187,6 +1187,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889756, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[0].name
+      value: Level01
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[1].name
+      value: Level02
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[2].name
+      value: Level03
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[3].name
+      value: Level04
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[4].name
+      value: Level01
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[0].scene
+      value: Level01
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[1].scene
+      value: Level02
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[2].scene
+      value: Level03
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[3].scene
+      value: Level04
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[0].completed
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

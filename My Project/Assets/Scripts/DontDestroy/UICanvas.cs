@@ -26,6 +26,4 @@ public class UICanvas : MonoBehaviour
                 Levels[i].GetComponent<Button>().interactable = false;
         }
     }
-
-    
 }

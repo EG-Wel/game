@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class MoveBird : MonoBehaviour
 {
-    public Rigidbody2D birdRigidbody2d;
+    [SerializeField] private Rigidbody2D birdRigidbody2d;
 
     [Header("===Non Random Fields===")]
-    public int speed = 5;
-    public int distance = 5;
-
+    [SerializeField] private int speed = 5;
+    [SerializeField] private int distance = 5;
+    
     [Header("===Random===")]
-    public bool useRandomSpeed;
-    public bool useRandomDistance;
+    [SerializeField] private bool useRandomSpeed;
+    [SerializeField] private bool useRandomDistance;
 
     [Header ("===Random Speed Values===")]
-    public int randomSpeedMin = 3;
-    public int randomSpeedMax = 11;
+    [SerializeField] private int randomSpeedMin = 3;
+    [SerializeField] private int randomSpeedMax = 11;
 
     [Header ("===Random Distance Values===")]
-    public int randomDistanceMin = 1;
-    public int randomDistanceMax = 6;
+    [SerializeField] private int randomDistanceMin = 1;
+    [SerializeField] private int randomDistanceMax = 6;
 
-    int direction;
-    Vector2 startPos;
-    bool facingRight = true;
+    private int direction;
+    private Vector2 startPos;
+    private bool facingRight = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         startPos = birdRigidbody2d.position;
@@ -50,7 +49,6 @@ public class MoveBird : MonoBehaviour
             distance = Random.Range(randomDistanceMin, randomDistanceMax);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (birdRigidbody2d.position.x < startPos.x - distance && !facingRight)

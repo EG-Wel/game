@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuScreen : MonoBehaviour
 {
-    public GameObject player;
-    public GameOverScreen restartGame;
-    public GameObject canvas;
-    public Button btnReturn, btnSettings, btnRestart, btnQuitGame;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameOverScreen restartGame;
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private Button btnReturn, btnSettings, btnRestart, btnQuitGame;
 
-    // Start is called before the first frame update
     void Start()
     {
         player.SetActive(false);
@@ -28,15 +27,18 @@ public class MenuScreen : MonoBehaviour
         FindObjectOfType<PlayerMovement>().menuActive = false;
         canvas.SetActive(false);
     }
+
     void OnClickSettings()
     {
         /// nothing yet
     }
+
     void OnClickRestart()
     {
         restartGame.RestartButton();
         Time.timeScale = 1;
     }
+
     void OnClickQuitGame()
     {
         Application.Quit();

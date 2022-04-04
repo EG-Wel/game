@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnitySceneManager = UnityEngine.SceneManagement;
 
 
@@ -11,10 +13,12 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public CircleCollider2D circleCollider;
     public Cinemachine.CinemachineVirtualCamera cam;
+    public GameObject player;
 
     public Vector3 fishPositsion;
-
     public GameObject[] fishs;
+
+    public Text tijd;
 
     float coyoteTime = 0.15f;
     public float coyoteTimeCounter;
@@ -32,17 +36,27 @@ public class PlayerMovement : MonoBehaviour
     public GameObject closest;
     public UnitySceneManager.Scene currentScene;
 
+    private float LevelTime = 0f;
+    Level level;
+
     private void Start()
     {
         currentScene = UnitySceneManager.SceneManager.GetActiveScene();
-        //FindObjectOfType<sceneControll>().Scene(currentScene);
         sceneControll.instance.Scene(currentScene);
-        closest = fishs[0];
-        
+        closest = fishs[0]; level = LevelInfo.instance.levels[0];
     }
 
     void Update()
     {
+        LevelTime += Time.deltaTime;
+        LevelInfo.instance.levels[0].time = LevelTime;
+
+        double mainGameTimerd = (double)level.time;
+        TimeSpan time = TimeSpan.FromSeconds(mainGameTimerd);
+        string displayTime = time.ToString("mm':'ss");
+
+        tijd.text = displayTime;
+
         playerRb = GetComponent<Rigidbody2D>();
 
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -51,12 +65,14 @@ public class PlayerMovement : MonoBehaviour
 
         DraggUpdate(playerRb);
         CoyoteTime();
-        MenuScreen();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            MenuScreen();
+
         HoldJump();
         Dive();
         Animatior();
         FishClose();
-        //wind.Show(new Vector3(0,0,0));
     }
 
     private void FixedUpdate() => controller.Move(horizontalMove * Time.deltaTime);
@@ -64,27 +80,27 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Door"))
-            CheckDoor(collision);
+            CheckDoor(collision.gameObject);
     }
 
-    void CheckDoor(Collision2D collision)
+    void CheckDoor(GameObject collision)
     {
-        if (collision.gameObject.name == "Door_1-2")
+        if (collision.name == "Door_1-2")
         {
             if (ScoreManager.instance.score >= 4)
-                Door("Level02");
+                Door("Congratulations1");
         }
 
-        if (collision.gameObject.name == "Door_2-3")
+        if (collision.name == "Door_2-3")
         {
             if (ScoreManager.instance.score >= 8)
-                Door("Level03");
+                Door("Congratulations2");
         }
 
-        if (collision.gameObject.name == "Door_3-4")
+        if (collision.name == "Door_3-4")
         {
             if (ScoreManager.instance.score >= 4)
-                Door("Level04");
+                Door("Congratulations3");
         }
 
         void Door(string level)
@@ -121,20 +137,19 @@ public class PlayerMovement : MonoBehaviour
     // Wanneer user esc knop klikt paused de game en andersom
     void MenuScreen()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (menuActive)
         {
-            if (menuActive)
-            {
-                menuScreen.SetActive(false);
-                menuActive = false;
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Time.timeScale = 0;
-                menuScreen.SetActive(true);
-                menuActive = true;
-            }
+            player.SetActive(true);
+            menuScreen.SetActive(false);
+            menuActive = false;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            player.SetActive(false);
+            Time.timeScale = 0;
+            menuScreen.SetActive(true);
+            menuActive = true;
         }
     }
 
@@ -208,27 +223,12 @@ public class PlayerMovement : MonoBehaviour
             if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
             {
                 if (!ScoreManager.instance.Enough(currentScene))
-                {
                     closest = fish;
-
-                }
                 else
                     closest = deur;
             }
         }
         print(closest.transform.position);
         wind.Show(closest.transform.position);
-
-        /*for (int i = 0; i < fishs.Length; i++)
-        {
-            if (Vector3.Distance(fishs[i].transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
-            {
-                closest = fishs[i];
-                print(closest.transform.position);
-                if (ScoreManager.instance.Enough(currentScene))
-                    closest = deur;
-            }
-        }
-        wind.Show(closest.transform.position);*/
     }
 }

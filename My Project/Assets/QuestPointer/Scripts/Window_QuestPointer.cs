@@ -7,30 +7,24 @@ using CodeMonkey.Utils;
 public class Window_QuestPointer : MonoBehaviour {
 
     [SerializeField] private Camera uiCamera;
+    [SerializeField]private RectTransform pointerRectTransform;
 
-    public Vector3 targetPosition;
-    public RectTransform pointerRectTransform;
+    private Vector3 targetPosition;
+    private Vector3 targetPositionScreenPoint;
+    private Vector3 cappedTargetScreenPosition;
+    private Vector3 pointerWorldPosition;
     private Image pointerImage;
+    private bool isOffScreen;
 
-
-
-    public Vector3 targetPositionScreenPoint;
-    public bool isOffScreen;
-    public Vector3 cappedTargetScreenPosition;
-    public Vector3 pointerWorldPosition;
-
-
-
-
-
-    private void Awake() {
+    private void Awake() 
+    {
         pointerRectTransform = transform.Find("Pointer").GetComponent<RectTransform>();
         pointerImage = transform.Find("Pointer").GetComponent<Image>();
-
     }
 
-    private void Update() {
-        float borderSize = 250f;
+    private void Update() 
+    {
+        float borderSize = 100f;
         targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
         isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
 
@@ -47,22 +41,20 @@ public class Window_QuestPointer : MonoBehaviour {
 
             pointerWorldPosition = uiCamera.ScreenToWorldPoint(cappedTargetScreenPosition);
             pointerRectTransform.position = pointerWorldPosition;
-            //print(new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f));
             pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-    }
+        }
         else
         {
             pointerImage.enabled = false;
             pointerWorldPosition = uiCamera.ScreenToWorldPoint(targetPositionScreenPoint);
             pointerRectTransform.position = pointerWorldPosition;
-            //print(new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f));
             pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-
             pointerRectTransform.localEulerAngles = Vector3.zero;
         }
     }
 
-    private void RotatePointerTowardsTargetPosition() {
+    private void RotatePointerTowardsTargetPosition() 
+    {
         Vector3 toPosition = targetPosition;
         Vector3 fromPosition = Camera.main.transform.position;
         fromPosition.z = 0f;
@@ -71,10 +63,5 @@ public class Window_QuestPointer : MonoBehaviour {
         pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
 
-    public void Show(Vector3 targetPosition)
-    {
-        //this.gameObject.SetActive(true);
-        this.targetPosition = targetPosition;
-        //print("dsaf");
-    }
+    public void Show(Vector3 targetPosition) => this.targetPosition = targetPosition;
 }
