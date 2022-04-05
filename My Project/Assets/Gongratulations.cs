@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Gongratulations : MonoBehaviour
 {
+    public static Gongratulations instance;
     //Scene currentScene;
     public int currentScene;
-    Level level;
+    public Level level;
 
     [SerializeField] Text yourTime;
 
@@ -18,16 +19,16 @@ public class Gongratulations : MonoBehaviour
 
     void Start()
     {
+        if (instance is null)
+        {
+            instance = this;
+        }
         level = LevelInfo.instance.levels[0];
     }
 
     void Update()
     {
-        double mainGameTimerd = (double)level.time;
-        TimeSpan time = TimeSpan.FromSeconds(mainGameTimerd);
-        string displayTime = time.ToString("mm':'ss");
-
-        yourTime.text = displayTime;
+        yourTime.text = FormatTime(level.time);
 
         Levels();
     }
@@ -107,9 +108,9 @@ public class Gongratulations : MonoBehaviour
 
     public string FormatTime(float time)
     {
-        int minutes = (int)time / 60000;
-        int seconds = (int)time / 1000 - 60 * minutes;
-        int milliseconds = (int)time - minutes * 60000 - 1000 * seconds;
-        return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        
+        double mainGameTimerd = (double)time;
+        TimeSpan times = TimeSpan.FromSeconds(mainGameTimerd);
+        return times.ToString("m':'ss");
     }
 }

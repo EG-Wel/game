@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     private bool toggle = false;
-
+    [SerializeField] private InputField name;
     public void PlayButton()
     {
+        LevelInfo.instance.name = name.text;
+
         if (toggle)
             UnitySceneManager.LoadScene("Uitleg");
         else
@@ -18,15 +21,6 @@ public class MainMenu : MonoBehaviour
 
     public void LoadScene(string levelName)
     {
-        if (levelName == "Back")
-        {
-
-        }
-        else if(levelName == "Next")
-        {
-            
-        }
-        else
-            UnitySceneManager.LoadScene(levelName);
+        UnitySceneManager.LoadScene(levelName);
     }
 }

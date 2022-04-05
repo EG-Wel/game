@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelInfo : MonoBehaviour
 {
+    public string name;
     public static LevelInfo instance;
     public Level[] levels;
 

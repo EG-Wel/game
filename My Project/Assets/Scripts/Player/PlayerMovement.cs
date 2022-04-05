@@ -43,7 +43,8 @@ public class PlayerMovement : MonoBehaviour
     {
         currentScene = UnitySceneManager.SceneManager.GetActiveScene();
         sceneControll.instance.Scene(currentScene);
-        closest = fishs[0]; level = LevelInfo.instance.levels[0];
+        closest = fishs[0]; 
+        level = LevelInfo.instance.levels[0];
     }
 
     void Update()

@@ -9,10 +9,10 @@ public class ScoreManager : MonoBehaviour
     public Text doorText;
     public int score;
 
-    private int lvl1 = 0;
+    /*private int lvl1 = 0;
     private int lvl2 = 1;
     private int lvl3 = 2;
-    private int lvl4 = 3;
+    private int lvl4 = 3;*/
 
     public Scene currentScene;
 
