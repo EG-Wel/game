@@ -4,7 +4,7 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class MainMenu : MonoBehaviour
 {
-    private bool toggle = true;
+    private bool toggle = false;
 
     public void PlayButton()
     {
