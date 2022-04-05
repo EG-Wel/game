@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6951589475461014220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6951589475461014210}
+  - component: {fileID: 6951589475461014211}
+  m_Layer: 12
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6951589475461014210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951589475461014220}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6951589475461014211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951589475461014220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce73b7a251ac364f856f65fa4188fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioo: {fileID: 0}
+  sounds:
+  - name: Background
+    clip: {fileID: 8300000, guid: 3dcdd9ba4ba5cc34a8c7612228120749, type: 3}
+    volume: 0.06
+    loop: 1
+    source: {fileID: 0}
+  - name: RUN!
+    clip: {fileID: 8300000, guid: 49dc2d804b6b2644eace8ce6d7beb6b3, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: dd37ba458eb5f88419000f57d5d46390, type: 3}
+    volume: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: Fish
+    clip: {fileID: 8300000, guid: 287f1a2ca89bfe649b11ed8b13d7c46f, type: 3}
+    volume: 0.05
+    loop: 0
+    source: {fileID: 0}
+  - name: Door
+    clip: {fileID: 8300000, guid: 14b70c6794b86ee45a0e6b5e7ab0c70c, type: 3}
+    volume: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: Death
+    clip: {fileID: 8300000, guid: 20ceb9b9b27986a478a5e2c7c1db063b, type: 3}
+    volume: 0.1
+    loop: 0
+    source: {fileID: 0}

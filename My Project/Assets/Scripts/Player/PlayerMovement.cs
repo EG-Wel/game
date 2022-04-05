@@ -1,159 +1,121 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
+using UnityEngine.UI;
+using UnitySceneManager = UnityEngine.SceneManagement;
 
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Window_QuestPointer wind;
+    public Rigidbody2D playerRb;
     public GameObject menuScreen;
     public CharacterController2D controller;
     public Animator animator;
-    public Vector3 door2;
-    public Vector3 spawn;
     public CircleCollider2D circleCollider;
     public Cinemachine.CinemachineVirtualCamera cam;
+    public GameObject player;
+
+    public Vector3 fishPositsion;
+    public GameObject[] fishs;
+
+    public Text tijd;
 
     float coyoteTime = 0.15f;
     public float coyoteTimeCounter;
 
     public float runSpeed = 40f;
     public bool isJumping = false;
-    public bool stopMovement = false;
-    public bool jump = false;
     public bool facingRight = true;
-    public bool floor = false;
     public bool menuActive = false;
-    //bool noseOnFloor = false;
-    public bool movingRight;
-    public bool movingLeft;
+    public float jumpTime;
 
+    public float jumpCounter;
     float horizontalMove = 0f;
-    
-    // Update is called once per frame
+    public GameObject deur;
+
+    public GameObject closest;
+    public UnitySceneManager.Scene currentScene;
+
+    private float LevelTime = 0f;
+    Level level;
+
+    private void Start()
+    {
+        currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        sceneControll.instance.Scene(currentScene);
+        closest = fishs[0]; level = LevelInfo.instance.levels[0];
+    }
+
     void Update()
     {
+        LevelTime += Time.deltaTime;
+        LevelInfo.instance.levels[0].time = LevelTime;
+
+        double mainGameTimerd = (double)level.time;
+        TimeSpan time = TimeSpan.FromSeconds(mainGameTimerd);
+        string displayTime = time.ToString("mm':'ss");
+
+        tijd.text = displayTime;
+
+        playerRb = GetComponent<Rigidbody2D>();
+
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
-
-        //PrintVelocoty();
-
-        SetIsJumping();
-       
-        //MovePlayer();
-
-        MovingDirection();
-
-        CoyoteTime(playerRb);
-
-        WalkingAnim();
-
-        JumpingAnim();
+        isJumping = !GetComponent<CharacterController2D>().m_Grounded;
 
         DraggUpdate(playerRb);
+        CoyoteTime();
 
-        WallBuggFix();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            MenuScreen();
 
-        MenuScreen();        
+        HoldJump();
+        Dive();
+        Animatior();
+        FishClose();
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("DoorDetection"))
-            ScoreManager.instance.Door(collision);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("DoorDetection"))
-            ScoreManager.instance.Door(collision);
-    }
+    private void FixedUpdate() => controller.Move(horizontalMove * Time.deltaTime);
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Door"))
-            CheckDoor(collision);
-
-        /*if (collision.gameObject.layer == 8)
-        {
-            controller.GetComponent<Rigidbody2D>().gravityScale = 2;
-            stopMovement = true;
-        }*/
+            CheckDoor(collision.gameObject);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    void CheckDoor(GameObject collision)
     {
-        
-    }
-
-    
-
-    private void FixedUpdate()
-    {
-        // if player is moving but facing different direction -> Flip player
-        if (horizontalMove < 0 && facingRight)
-            flip();
-        else if (horizontalMove > 0 && !facingRight)
-            flip();
-    }
-
-    void CheckDoor(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Door_1-2")
+        if (collision.name == "Door_1-2")
         {
             if (ScoreManager.instance.score >= 4)
-            {
-                GetComponent<CharacterController2D>().m_JumpForce = 850f;
-                UnitySceneManager.LoadScene("Level2");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                cam.m_Lens.OrthographicSize = 8;
-                cam.m_Lens.NearClipPlane = -20;
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
+                Door("Congratulations1");
         }
 
-        if (collision.gameObject.name == "Door_2-3")
+        if (collision.name == "Door_2-3")
         {
             if (ScoreManager.instance.score >= 8)
-            {
-                UnitySceneManager.LoadScene("Level3");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
+                Door("Congratulations2");
         }
 
-        if (collision.gameObject.name == "Door_3-4")
+        if (collision.name == "Door_3-4")
         {
             if (ScoreManager.instance.score >= 4)
-            {
-                UnitySceneManager.LoadScene("Level4");
-                controller.transform.SetPositionAndRotation(spawn, Quaternion.identity);
-                facingRight = true;
-                floor = false;
-                collision.gameObject.GetComponent<AudioSource>().PlayDelayed(3f);
-                FindObjectOfType<AudioManager>().Play("RUN!");
-                FindObjectOfType<AudioManager>().Stop("Background");
-                FindObjectOfType<AudioManager>().Play("Door");
-            }
+                Door("Congratulations3");
+        }
+
+        void Door(string level)
+        {
+            UnitySceneManager.SceneManager.LoadScene(level);
+            controller.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+            facingRight = true;
+            FindObjectOfType<AudioManager>().Play("Door");
         }
     }
 
-    void flip()
-    {
-        facingRight = !facingRight;
-        transform.Rotate(0f, 180f, 0);
-    }
+    // If player falling drag increases so it looks like he is gliding
     void DraggUpdate(Rigidbody2D rb)
     {
-        // When player falling drag increases so it looks like he is gliding
+
         if (rb.velocity.y < 0)
             rb.drag = 5f;
         else
@@ -163,110 +125,110 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0f;
     }
 
-    void WalkingAnim()
+    // CoyoteTime
+    void CoyoteTime()
     {
+        if (GetComponent<CharacterController2D>().m_Grounded)
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.deltaTime;
+    }
+
+    // Wanneer user esc knop klikt paused de game en andersom
+    void MenuScreen()
+    {
+        if (menuActive)
+        {
+            player.SetActive(true);
+            menuScreen.SetActive(false);
+            menuActive = false;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            player.SetActive(false);
+            Time.timeScale = 0;
+            menuScreen.SetActive(true);
+            menuActive = true;
+        }
+    }
+
+    // Wanneer de user jump button ingehoud drukt 
+    // springt de player hoger
+    void HoldJump()
+    {
+        if (!isJumping && Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+            jumpCounter = jumpTime;
+            playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
+        }
+
+        jumpCounter -= Time.deltaTime;
+
+        if (Input.GetButton("Jump") && isJumping)
+        {
+            if (jumpCounter > 0)
+                playerRb.velocity = new Vector2(playerRb.velocity.x, GetComponent<CharacterController2D>().m_JumpForce);
+            else
+                isJumping = false;
+        }
+
+        if (Input.GetButtonUp("Jump"))
+            isJumping = false;
+    }
+
+    void Dive()
+    {
+        if (Input.GetButtonDown("Down") && isJumping)
+            playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y - 1f);
+        if (Input.GetButton("Down") && isJumping)
+            playerRb.drag = 0f;
+    }
+
+    // Alle animaties
+    void Animatior()
+    {
+        // If user is holding down button player dives
+        if (Input.GetButton("Down") && isJumping)
+            animator.SetBool("IsDiving", true);
+
+        if (Input.GetButtonUp("Down"))
+            animator.SetBool("IsDiving", false);
+
+        // Wanneer player jumped show jump animation
+        if (FindObjectOfType<CharacterController2D>().m_Grounded)
+            animator.SetBool("IsJumping", false);
+        else
+            animator.SetBool("IsJumping", true);
+
         // If player is moving -> play running animation
         // Else stop animation
         if (horizontalMove != 0)
             animator.SetFloat("IsRunning", 1f);
         else
             animator.SetFloat("IsRunning", 0f);
-    }
-    void SetIsJumping()
-    {
-        isJumping = !GetComponent<CharacterController2D>().m_Grounded;
+
+        if (horizontalMove > 0)
+            animator.SetBool("FacingRight", true);
+        if (horizontalMove < 0)
+            animator.SetBool("FacingRight", false);
     }
 
-    void JumpingAnim()
+    private void FishClose()
     {
-        if (FindObjectOfType<CharacterController2D>().m_Grounded)
+        closest = fishs[0];
+        foreach (GameObject fish in fishs)
         {
-            animator.SetBool("IsJumping", false);
-            //FindObjectOfType<AudioManager>().Play("Jump");
-        }
-        else
-            animator.SetBool("IsJumping", true);
-    }
-
-    void CoyoteTime(Rigidbody2D rb)
-    {
-        if (GetComponent<CharacterController2D>().m_Grounded)
-            coyoteTimeCounter = coyoteTime;
-        else
-            coyoteTimeCounter -= Time.deltaTime;
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (coyoteTimeCounter > 0f)
+            if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
             {
-                jump = true;
-                coyoteTimeCounter = 0f;
-            }
-            else
-                jump = false;
-        }
-
-        if (rb.velocity.y > 20)
-            if (GetComponent<CharacterController2D>().m_JumpForce == 650)
-                rb.velocity = new Vector2(0, 10);
-            else if (GetComponent<CharacterController2D>().m_JumpForce == 850)
-                rb.velocity = new Vector2(0, 14);
-    }
-
-    void MovingDirection()
-    {
-
-    }
-
-    void MovePlayer()
-    {
-        if (horizontalMove != 0 || jump)
-        {
-            if (!stopMovement)
-            {
-                controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
-                jump = false;
+                if (!ScoreManager.instance.Enough(currentScene))
+                    closest = fish;
+                else
+                    closest = deur;
             }
         }
-        if (horizontalMove == 0)
-            controller.Move(0, false, jump);
-    }
-
-    void PrintVelocoty()
-    {
-        print(controller.GetComponent<Rigidbody2D>().velocity.y);
-    }
-
-    void MenuScreen()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (menuActive)
-            {
-                menuScreen.SetActive(false);
-                menuActive = false;
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Time.timeScale = 0;
-                menuScreen.SetActive(true);
-                menuActive = true;
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-    void WallBuggFix()
-    {
-        
+        print(closest.transform.position);
+        wind.Show(closest.transform.position);
     }
 }

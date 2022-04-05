@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3275110769895055187}
   - component: {fileID: 3275110769895055186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GrassCliffRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3275110770238637240}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StaticBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 3275110771193902245}
   - component: {fileID: 3275110771193902244}
   - component: {fileID: 3275110771193902243}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: GrassCliffLeft
   m_TagString: Wall
   m_Icon: {fileID: 0}

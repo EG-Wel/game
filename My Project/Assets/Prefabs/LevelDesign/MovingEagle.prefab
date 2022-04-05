@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 357404094258797583}
   - component: {fileID: 357404094258797570}
   - component: {fileID: 4266611324367383718}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MovingEagle
   m_TagString: Void
   m_Icon: {fileID: 0}

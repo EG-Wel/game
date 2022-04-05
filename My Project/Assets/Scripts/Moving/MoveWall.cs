@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class MoveWall : MonoBehaviour
 {
-    public Rigidbody2D rigidbody2d;
+    [SerializeField] private Rigidbody2D rigidbody2d;
 
     [Header("===Non Random Fields===")]
-    public int speed = 5;
-    public int distance = 5;
-    public bool randDirectionOnStart;
+    [SerializeField] private int speed = 5;
+    [SerializeField] private int distance = 5;
+    [SerializeField] private bool randDirectionOnStart;
 
-    int direction;
-    Vector2 startPos;
+    private int direction;
+    private Vector2 startPos;
 
     // Start is called before the first frame update
     void Start()

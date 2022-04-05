@@ -1,16 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class MainMenu : MonoBehaviour
 {
-    public bool toggle = false;
-
-    private void Start()
-    {
-        //gameObject.GetComponent<AudioManager>().Play("Background"); 
-        //FindObjectOfType<AudioManager>().Play("Background");
-    }
+    private bool toggle = false;
 
     public void PlayButton()
     {
@@ -20,8 +14,19 @@ public class MainMenu : MonoBehaviour
             UnitySceneManager.LoadScene("LevelSelector");
     }
 
-    public void Toggle()
+    public void Toggle() => toggle = !toggle;
+
+    public void LoadScene(string levelName)
     {
-        toggle = !toggle;
+        if (levelName == "Back")
+        {
+
+        }
+        else if(levelName == "Next")
+        {
+            
+        }
+        else
+            UnitySceneManager.LoadScene(levelName);
     }
 }

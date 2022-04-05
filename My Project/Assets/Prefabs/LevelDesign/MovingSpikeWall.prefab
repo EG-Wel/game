@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7599684322994370298}
   - component: {fileID: 7012247857201944811}
   - component: {fileID: 6387207611602673267}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 3759798911463124518}
   - component: {fileID: 8471006657517625762}
   - component: {fileID: 2906394638944011380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 4867481018583045489}
   - component: {fileID: 2011873259764470766}
   - component: {fileID: 2366265723370160533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 4204928475529749492}
   - component: {fileID: 1233528863552562124}
   - component: {fileID: 3011572041436113310}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 3975467321034273260}
   - component: {fileID: 8969817429894178137}
   - component: {fileID: 4801261864232484627}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ GameObject:
   - component: {fileID: 6037541832515479618}
   - component: {fileID: 679800911076424151}
   - component: {fileID: 3469811957431318185}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6012387431220537719}
   - component: {fileID: 6012387431220537718}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Column
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +777,7 @@ GameObject:
   - component: {fileID: 6012387431563702007}
   - component: {fileID: 6012387431563702006}
   - component: {fileID: 6012387431563702005}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 6012387431777746293}
   - component: {fileID: 6012387431777746292}
   - component: {fileID: 6012387431777746291}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spike
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -1005,7 +1005,7 @@ GameObject:
   - component: {fileID: 6012387432507951514}
   - component: {fileID: 6012387432507951513}
   - component: {fileID: 6012387432507951512}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MovingSpikeWall
   m_TagString: Void
   m_Icon: {fileID: 0}
@@ -1084,7 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6012387432746495274}
   - component: {fileID: 6012387432746495273}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Column
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1166,7 +1166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6012387433222622306}
   - component: {fileID: 6012387433222622307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Column
   m_TagString: Wall
   m_Icon: {fileID: 0}
