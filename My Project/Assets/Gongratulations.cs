@@ -20,14 +20,14 @@ public class Gongratulations : MonoBehaviour
     void Start()
     {
         if (instance is null)
-        {
             instance = this;
-        }
+
         level = LevelInfo.instance.levels[0];
     }
 
     void Update()
     {
+        
         yourTime.text = FormatTime(level.time);
 
         Levels();
@@ -106,11 +106,5 @@ public class Gongratulations : MonoBehaviour
         }
     }
 
-    public string FormatTime(float time)
-    {
-        
-        double mainGameTimerd = (double)time;
-        TimeSpan times = TimeSpan.FromSeconds(mainGameTimerd);
-        return times.ToString("m':'ss");
-    }
+    public string FormatTime(float time) => Math.Round(time, 3).ToString();
 }

@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelInfo : MonoBehaviour
 {
-    public string name;
     public static LevelInfo instance;
+    public string name;
+    public bool userExist;
     public Level[] levels;
 
     public Scene currentScene;

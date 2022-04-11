@@ -24,24 +24,13 @@ public class ApiHelper : MonoBehaviour
 
     public float timeDB;
 
-    public string[] names = { "Stan", "Boyd", "Emily", "Demo", "Ans"};
-
     private void Start()
     {
-        /*names[0] = "Stan";
-        names[1] = "Boyd";
-        names[2] = "Emily";
-        names[3] = "Demo";
-        names[4] = "Ans";*/
-
         naam = FindObjectOfType<LevelInfo>().name;
         if (instance is null)
             instance = this;
         GetByName += naam;
         StartCoroutine(GetUserData());
-        //GetUserTime();
-
-        
     }
 
     public IEnumerator GetUserData()
@@ -61,13 +50,12 @@ public class ApiHelper : MonoBehaviour
             float userTime = userInfo[x]["gameData"]["timePlayed"];
             if (userName == naam)
                 timeDB = userTime;
-            print(timeDB);
 
-            string time = Gongratulations.instance.FormatTime(userTime);
+            double time = Math.Round(userTime, 3);
 
             prefab.transform.Find("Placement").GetComponent<Text>().text = (x + 1).ToString();
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
-            prefab.transform.Find("Time").GetComponent<Text>().text = time;
+            prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
             Instantiate(prefab, parent);
         }
@@ -81,24 +69,6 @@ public class ApiHelper : MonoBehaviour
     public IEnumerator putTime()
     {
         string uri = "https://localhost:7080/HighScores/UpdateTimePlayed";
-        /*print("updated");
-        byte[] data = System.Text.Encoding.UTF8.GetBytes("");
-        *//*WWWForm data = new WWWForm();
-        data.AddField("name", name);
-        data.AddField("time", Gongratulations.instance.level.time.ToString());*//*
-        using (UnityWebRequest request = UnityWebRequest.Put(uri, data))
-        {
-            yield return request.SendWebRequest();
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(request.error);
-            }
-            else
-            {
-                Debug.Log("Upload complete!");
-            }
-        }*/
-        //string template = ;
         print(naam);
         print(Gongratulations.instance.level.time);
         string time = Gongratulations.instance.level.time.ToString();
@@ -125,19 +95,51 @@ public class ApiHelper : MonoBehaviour
             foreach (Transform child in parent.transform)
             {
                 child.gameObject.SetActive(false);
+                print("hi");
             }
-            StartCoroutine(GetUserData());
+            StartCoroutine(PrintNew());
         }
     }
 
-    public IEnumerator GetUserTime()
+    public IEnumerator PrintNew()
     {
-        UnityWebRequest request = UnityWebRequest.Get(GetByName);
+        UnityWebRequest request = UnityWebRequest.Get(GetAll);
 
         yield return request.SendWebRequest();
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
-        
-        print(userInfo["gameData"]["timePlayed"]);
+
+        for (int x = 0; x < userInfo.Count; x++)
+        {
+            string userName = userInfo[x]["name"];
+            float userTime = userInfo[x]["gameData"]["timePlayed"];
+
+            double time = Math.Round(userTime, 3);
+
+            prefab.transform.Find("Placement").GetComponent<Text>().text = (x + 1).ToString();
+            prefab.transform.Find("Name").GetComponent<Text>().text = userName;
+            prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
+
+            Instantiate(prefab, parent);
+        }
+    }
+
+    public IEnumerator DoesUserExist()
+    {
+        UnityWebRequest request = UnityWebRequest.Get(GetAll);
+
+        yield return request.SendWebRequest();
+
+        JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
+
+        for (int x = 0; x < userInfo.Count; x++)
+        {
+            string userName = userInfo[x]["name"];
+
+            if (userName == naam)
+                LevelInfo.instance.userExist = true;
+            else
+                LevelInfo.instance.userExist = false;
+        }
     }
 }
