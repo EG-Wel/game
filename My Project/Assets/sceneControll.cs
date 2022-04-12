@@ -14,7 +14,6 @@ public class sceneControll : MonoBehaviour
 
     public void Scene(Scene currentScene)
     {
-        print(currentScene.name);
         for (int i = 0; i < lvl.Length; i++)
         {
             if (currentScene.name == $"Level0{i + 1}")

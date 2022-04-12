@@ -6,12 +6,14 @@ using SimpleJSON;
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Net.Http;
 
 public class ApiHelperStart : MonoBehaviour
 {
     public static ApiHelperStart instance;
-    private string GetAll = "https://localhost:7080/HighScores/GetAllUserData";
-    public Text name;
+    private string GetAll = "https://localhost:7080/HighScores/GetAllUserData"; 
+    private static readonly HttpClient client = new HttpClient();
 
     private void Start()
     {
@@ -19,9 +21,11 @@ public class ApiHelperStart : MonoBehaviour
             instance = this;
     }
 
-    public void Exists() => StartCoroutine(DoesUserExist());
+    public void Exists(Text name) => StartCoroutine(DoesUserExist(name.text));
 
-    public IEnumerator DoesUserExist()
+    public void AddNew(Text userName) => StartCoroutine(NewUser(LevelInfo.instance.name, userName.text));
+
+    public IEnumerator DoesUserExist(string name)
     {
         UnityWebRequest request = UnityWebRequest.Get(GetAll);
 
@@ -33,7 +37,7 @@ public class ApiHelperStart : MonoBehaviour
         {
             string userName = userInfo[x]["name"];
 
-            if (userName == name.text)
+            if (userName.ToLower() == name.ToLower())
             {
                 LevelInfo.instance.userExist = true;
                 break;
@@ -42,5 +46,27 @@ public class ApiHelperStart : MonoBehaviour
                 LevelInfo.instance.userExist = false;
         }
         MainMenu.instance.PlayButton();
+    }
+
+    public IEnumerator NewUser(string name, string userName)
+    {
+        string uri = "https://localhost:7080/HighScores/AddNewUser";
+
+        string body = String.Format("\"name\" : \"{0}\", \"alias\" : \"{1}\"", name, userName);
+        body = "{" + body + "}";
+
+        byte[] myData = System.Text.Encoding.UTF8.GetBytes(body);
+        UnityWebRequest www = UnityWebRequest.Put(uri, myData);
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+            Debug.Log(www.error);
+        else 
+        {
+            LevelInfo.instance.userExist = true;
+            MainMenu.instance.NewUser();
+        }
     }
 }

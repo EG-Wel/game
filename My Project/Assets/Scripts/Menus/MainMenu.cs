@@ -9,15 +9,18 @@ public class MainMenu : MonoBehaviour
     private bool toggle = false;
     [SerializeField] private GameObject nameCanvas;
     [SerializeField] private GameObject newUserCanvas;
+    [SerializeField] private Text name;
+    [SerializeField] private GameObject readOnly;
 
     private void Start()
     {
         if (instance is null)
             instance = this;
     }
+
     public void PlayButton()
     {
-        LevelInfo.instance.name = ApiHelperStart.instance.name.text;
+        LevelInfo.instance.name = name.text;
 
         if (LevelInfo.instance.userExist)
             UnitySceneManager.LoadScene("LevelSelector");
@@ -25,13 +28,11 @@ public class MainMenu : MonoBehaviour
         {
             nameCanvas.SetActive(false);
             newUserCanvas.SetActive(true);
+            readOnly.GetComponent<InputField>().readOnly = true;
         }
     }
 
-    public void AddUser()
-    {
-
-    }
+    public void NewUser() => UnitySceneManager.LoadScene("Uitleg");
 
     public void Toggle() => toggle = !toggle;
 

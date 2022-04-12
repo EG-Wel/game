@@ -177,12 +177,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonUp("Jump"))
             isJumping = false;
+
+
+        
     }
 
     void Dive()
     {
         if (Input.GetButtonDown("Down") && isJumping)
-            playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y - 1f);
+            playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y - 2f);
         if (Input.GetButton("Down") && isJumping)
             playerRb.drag = 0f;
     }
@@ -229,7 +232,6 @@ public class PlayerMovement : MonoBehaviour
                     closest = deur;
             }
         }
-        print(closest.transform.position);
         wind.Show(closest.transform.position);
     }
 }

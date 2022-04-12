@@ -17,7 +17,6 @@ public class ApiHelper : MonoBehaviour
     public Transform prefab;
     public Transform parent;
 
-    private string GetByName = "https://localhost:7080/HighScores/SearchByName/";
     private string GetAll = "https://localhost:7080/HighScores/GetAllUserData";
 
     public string naam;
@@ -26,15 +25,17 @@ public class ApiHelper : MonoBehaviour
 
     private void Start()
     {
-        naam = FindObjectOfType<LevelInfo>().name;
         if (instance is null)
             instance = this;
-        GetByName += naam;
+        naam = FindObjectOfType<LevelInfo>().name.ToLower();
         StartCoroutine(GetUserData());
     }
 
+    public void vPrintNew() => StartCoroutine(PrintNew());
+
     public IEnumerator GetUserData()
     {
+        print("hellofrom getuserdata");
         UnityWebRequest request = UnityWebRequest.Get(GetAll);
 
         yield return request.SendWebRequest();
@@ -43,10 +44,8 @@ public class ApiHelper : MonoBehaviour
 
         for (int x = 0; x < userInfo.Count; x++)
         {
-            print(userInfo.GetType());
-
-            print(userInfo);
             string userName = userInfo[x]["name"];
+            userName = userName.ToLower();
             float userTime = userInfo[x]["gameData"]["timePlayed"];
             if (userName == naam)
                 timeDB = userTime;
@@ -57,52 +56,49 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
-            Instantiate(prefab, parent);
+            if (userName == naam)
+            {
+                prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
+                Instantiate(prefab, parent);
+            }
+            else
+            {
+                prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 125);
+                Instantiate(prefab, parent);
+            }
         }
 
-        print(naam + "   " + Gongratulations.instance.level.time.ToString() + "   " + timeDB.ToString());
         if (Gongratulations.instance.level.time < timeDB)
             StartCoroutine(putTime());
-        
     }
 
     public IEnumerator putTime()
     {
         string uri = "https://localhost:7080/HighScores/UpdateTimePlayed";
-        print(naam);
-        print(Gongratulations.instance.level.time);
+
         string time = Gongratulations.instance.level.time.ToString();
         time = time.Replace(',','.');
-        print(time);
 
         string body = String.Format("\"name\" : \"{0}\", \"time\" : {1}", naam, time);
         body = "{" + body + "}";
-        print(body);
 
         byte[] myData = System.Text.Encoding.UTF8.GetBytes(body);
         UnityWebRequest www = UnityWebRequest.Put(uri, myData);
         www.SetRequestHeader("Content-Type", "application/json");
-        print(www.url);
+
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
-        {
             Debug.Log(www.error);
-        }
         else
-        {
-            Debug.Log("Upload complete!");
-            foreach (Transform child in parent.transform)
-            {
-                child.gameObject.SetActive(false);
-                print("hi");
-            }
             StartCoroutine(PrintNew());
-        }
     }
 
     public IEnumerator PrintNew()
     {
+        foreach (Transform child in parent.transform)
+            Destroy(child.gameObject);
+
         UnityWebRequest request = UnityWebRequest.Get(GetAll);
 
         yield return request.SendWebRequest();
@@ -118,28 +114,19 @@ public class ApiHelper : MonoBehaviour
 
             prefab.transform.Find("Placement").GetComponent<Text>().text = (x + 1).ToString();
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
+            userName = userName.ToLower();
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
-            Instantiate(prefab, parent);
-        }
-    }
-
-    public IEnumerator DoesUserExist()
-    {
-        UnityWebRequest request = UnityWebRequest.Get(GetAll);
-
-        yield return request.SendWebRequest();
-
-        JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
-
-        for (int x = 0; x < userInfo.Count; x++)
-        {
-            string userName = userInfo[x]["name"];
-
             if (userName == naam)
-                LevelInfo.instance.userExist = true;
+            {
+                prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
+                Instantiate(prefab, parent);
+            }
             else
-                LevelInfo.instance.userExist = false;
+            {
+                prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 125);
+                Instantiate(prefab, parent);
+            }
         }
     }
 }

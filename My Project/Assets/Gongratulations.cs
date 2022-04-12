@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class Gongratulations : MonoBehaviour
 {
     public static Gongratulations instance;
-    //Scene currentScene;
     public int currentScene;
     public Level level;
 
@@ -27,7 +26,6 @@ public class Gongratulations : MonoBehaviour
 
     void Update()
     {
-        
         yourTime.text = FormatTime(level.time);
 
         Levels();
