@@ -6,6 +6,7 @@ public class PlayerDeath : MonoBehaviour
     public Vector3 spawn;
     public GameObject player;
     public GameObject[] heartArray;
+    [SerializeField] private Canvas minimap;
 
     public int death = 0;
 
@@ -19,8 +20,8 @@ public class PlayerDeath : MonoBehaviour
                 Destroy(heartArray[i]);
                 if (death == 3)
                 {
-                    player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                    player.gameObject.GetComponent<PlayerMovement>().enabled = false;
+                    player.gameObject.SetActive(false);
+                    minimap.gameObject.SetActive(false);
                     GameOverScreen.Setup(FindObjectOfType<ScoreManager>().score);
                 }
             }

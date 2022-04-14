@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnitySceneManager = UnityEngine.SceneManagement;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -34,15 +34,16 @@ public class PlayerMovement : MonoBehaviour
     public GameObject deur;
 
     public GameObject closest;
-    public UnitySceneManager.Scene currentScene;
+    public Scene currentScene;
 
     private float LevelTime = 0f;
     Level level;
 
     private void Start()
     {
-        currentScene = UnitySceneManager.SceneManager.GetActiveScene();
+        currentScene = SceneManager.GetActiveScene();
         sceneControll.instance.Scene(currentScene);
+        ScoreManager.FindObjectOfType<ScoreManager>().currentScene = currentScene;
         closest = fishs[0]; 
         level = LevelInfo.instance.levels[0];
     }
@@ -106,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
         void Door(string level)
         {
-            UnitySceneManager.SceneManager.LoadScene(level);
+            SceneManager.LoadScene(level);
             controller.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
             facingRight = true;
             FindObjectOfType<AudioManager>().Play("Door");

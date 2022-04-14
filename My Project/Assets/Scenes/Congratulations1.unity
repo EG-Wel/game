@@ -1136,7 +1136,6 @@ GameObject:
   - component: {fileID: 870640697}
   - component: {fileID: 870640696}
   - component: {fileID: 870640695}
-  - component: {fileID: 870640700}
   - component: {fileID: 870640701}
   m_Layer: 0
   m_Name: HighScorePanel
@@ -1266,21 +1265,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &870640700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870640693}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e448f0c3d5321468c07b6a8f815dbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instance: {fileID: 0}
-  prefab: {fileID: 5389773604980873034, guid: de62e49b09b74f241af1030d70b64d3a, type: 3}
-  parent: {fileID: 878254952}
 --- !u!114 &870640701
 MonoBehaviour:
   m_ObjectHideFlags: 0

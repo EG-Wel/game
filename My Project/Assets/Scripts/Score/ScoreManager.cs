@@ -9,16 +9,10 @@ public class ScoreManager : MonoBehaviour
     public Text doorText;
     public int score;
 
-    /*private int lvl1 = 0;
-    private int lvl2 = 1;
-    private int lvl3 = 2;
-    private int lvl4 = 3;*/
-
     public Scene currentScene;
 
     private string addString;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
@@ -27,6 +21,7 @@ public class ScoreManager : MonoBehaviour
 
     public void ChangeScore(int points)
     {
+        print(currentScene.name);
         if (doorText != null)
         {
             // Add points to score

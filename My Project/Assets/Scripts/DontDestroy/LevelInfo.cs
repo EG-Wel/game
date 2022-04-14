@@ -18,21 +18,17 @@ public class LevelInfo : MonoBehaviour
             instance = this;
     }
 
-    private void Update()
-    {
-        currentScene = SceneManager.GetActiveScene();
-        //print(currentScene.name);
-    }
+    private void FixedUpdate() => currentScene = SceneManager.GetActiveScene();
 
     public string GetCurrentScene()
     {
         if (currentScene.name == "Level01")
             return "Level01";
-        if (currentScene.name == "Level02")
+        else if (currentScene.name == "Level02")
             return "Level02";
-        if (currentScene.name == "Level03")
+        else if (currentScene.name == "Level03")
             return "Level03";
-        if (currentScene.name == "Level04")
+        else if (currentScene.name == "Level04")
             return "Level04";
         else
             return "MainMenu";

@@ -7,6 +7,7 @@ public class GameOverScreen : MonoBehaviour
     public GameObject Canvas;
     public GameObject overlay;
     public Text pointsText;
+
     public void Setup(int score)
     {
         overlay.SetActive(false);

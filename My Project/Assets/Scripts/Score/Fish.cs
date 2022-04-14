@@ -11,9 +11,9 @@ public class Fish : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            fish.gameObject.SetActive(false);
             fish.transform.position = collision.GetComponent<PlayerMovement>().deur.transform.position;
             FindObjectOfType<AudioManager>().Play("Fish");
-            fish.gameObject.SetActive(false);
             ScoreManager.instance.ChangeScore(1);
         }
     }

@@ -48,9 +48,27 @@ public class ApiHelperStart : MonoBehaviour
         MainMenu.instance.PlayButton();
     }
 
-    public IEnumerator NewUser(string name, string userName)
+    public IEnumerator NewUser(string name, string alias)
     {
-        string uri = "https://localhost:7080/HighScores/AddNewUser";
+        WWWForm form = new WWWForm();
+        form.AddField("name", name);
+        form.AddField("alias", alias);
+
+
+        UnityWebRequest www = UnityWebRequest.Post("https://localhost:7080/HighScores/AddNewUser", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+            Debug.Log(www.error);
+        else
+            Debug.Log("Form upload complete!");
+
+
+
+
+
+
+        /*string uri = "https://localhost:7080/HighScores/AddNewUser";
 
         string body = String.Format("\"name\" : \"{0}\", \"alias\" : \"{1}\"", name, userName);
         body = "{" + body + "}";
@@ -63,10 +81,10 @@ public class ApiHelperStart : MonoBehaviour
 
         if (www.isNetworkError || www.isHttpError)
             Debug.Log(www.error);
-        else 
+        else
         {
             LevelInfo.instance.userExist = true;
             MainMenu.instance.NewUser();
-        }
+        }*/
     }
 }

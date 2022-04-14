@@ -17,7 +17,7 @@ public class ApiHelper : MonoBehaviour
     public Transform prefab;
     public Transform parent;
 
-    private string GetAll = "https://localhost:7080/HighScores/GetAllUserData";
+    private string GetAll = "https://localhost:7080/Scores/GetByLevel/";
 
     public string naam;
 
@@ -31,29 +31,33 @@ public class ApiHelper : MonoBehaviour
         StartCoroutine(GetUserData());
     }
 
-    public void vPrintNew() => StartCoroutine(PrintNew());
+    public void vPrintNew() => StartCoroutine(RefreshHsList());
 
     public IEnumerator GetUserData()
     {
-        print("hellofrom getuserdata");
-        UnityWebRequest request = UnityWebRequest.Get(GetAll);
+        print("hi");
+        UnityWebRequest request = UnityWebRequest.Get(GetAll + FindObjectOfType<LevelInfo>().levels[0].scene);
+
+        print(GetAll + FindObjectOfType<LevelInfo>().levels[0].scene);
 
         yield return request.SendWebRequest();
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
 
+        print(userInfo);
+
         for (int x = 0; x < userInfo.Count; x++)
         {
             string userName = userInfo[x]["name"];
             userName = userName.ToLower();
-            float userTime = userInfo[x]["gameData"]["timePlayed"];
+            float userTime = userInfo[x]["time"];
             if (userName == naam)
                 timeDB = userTime;
 
             double time = Math.Round(userTime, 3);
 
             prefab.transform.Find("Placement").GetComponent<Text>().text = (x + 1).ToString();
-            prefab.transform.Find("Name").GetComponent<Text>().text = userName;
+            prefab.transform.Find("Name").GetComponent<Text>().text = userName.Remove(1).ToUpper() + userName.Substring(1);
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
             if (userName == naam)
@@ -91,10 +95,10 @@ public class ApiHelper : MonoBehaviour
         if (www.isNetworkError || www.isHttpError)
             Debug.Log(www.error);
         else
-            StartCoroutine(PrintNew());
+            StartCoroutine(RefreshHsList());
     }
 
-    public IEnumerator PrintNew()
+    public IEnumerator RefreshHsList()
     {
         foreach (Transform child in parent.transform)
             Destroy(child.gameObject);
