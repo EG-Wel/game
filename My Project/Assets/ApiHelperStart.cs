@@ -12,7 +12,7 @@ using System.Net.Http;
 public class ApiHelperStart : MonoBehaviour
 {
     public static ApiHelperStart instance;
-    private string GetAll = "https://localhost:7080/HighScores/GetAllUserData"; 
+    private string GetAll = "https://localhost:7080/Scores/GetAllUsers"; 
     private static readonly HttpClient client = new HttpClient();
 
     private void Start()
