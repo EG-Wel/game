@@ -35,6 +35,7 @@ public class ApiHelper : MonoBehaviour
                 print(item.id);
                 currentScene = item.sceneName;
                 currentSceneId = item.id;
+                FindObjectOfType<Gongratulations>().level = item;
                 FindObjectOfType<Gongratulations>().Levels(item.id);
             }
         }
@@ -62,9 +63,6 @@ public class ApiHelper : MonoBehaviour
             print(userInfo[x]);
             string userName = userInfo[x]["name"];
             float userTime = userInfo[x]["time"];
-
-            /*if (userName == name)
-                timeDB = userTime;*/
 
             double time = Math.Round(userTime, 3);
 
@@ -128,6 +126,9 @@ public class ApiHelper : MonoBehaviour
         yield return request.SendWebRequest();
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
+
+        if (currentlevel[currentSceneId].DBTime == 0 || currentlevel[currentSceneId].playTime < currentlevel[currentSceneId].DBTime)
+            currentlevel[currentSceneId].DBTime = currentlevel[currentSceneId].playTime;
 
         for (int x = 0; x < userInfo.Count; x++)
         {

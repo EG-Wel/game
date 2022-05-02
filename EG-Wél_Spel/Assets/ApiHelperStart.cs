@@ -15,8 +15,10 @@ public class ApiHelperStart : MonoBehaviour
 
     [Header("===GameObjects===")]
     [SerializeField] Text Name;
+    [SerializeField] Text registerName;
     [SerializeField] Text Alias;
     [SerializeField] InputField Password;    
+    [SerializeField] InputField registerPassword;    
     [SerializeField] Text Email;    
 
     private void Start()
@@ -26,14 +28,16 @@ public class ApiHelperStart : MonoBehaviour
     }
 
     public void ReadNameInput(string s) => Name.text = s.Trim();
+    public void ReadregisterNameInput(string s) => registerName.text = s.Trim();
+    public void ReadregisterPasswordInput(string s) => registerPassword.text = s.Trim();
     public void ReadAliaswInput(string s) => Alias.text = s.Trim();
     public void ReadPasswordInput(string s) => Password.text = s.Trim();
     public void ReadEmailInput(string s) => Email.text = s.Trim();
 
     public void Exists() => StartCoroutine(DoesUserExist(Name.text));
 
-    public void AddNew() => StartCoroutine(NewUser(Name.text, Alias.text, Email.text, Password.text));
-
+    public void AddNew() => StartCoroutine(NewUser(registerName.text, Alias.text, Email.text, registerPassword.text));
+    
     public IEnumerator DoesUserExist(string name)
     {
         name.Trim();
@@ -43,49 +47,65 @@ public class ApiHelperStart : MonoBehaviour
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
 
-        for (int x = 0; x < userInfo.Count; x++)
-        {
-            string userName = userInfo[x]["name"];
-            string password = userInfo[x]["password"];
-
-            if (userName == name)
+        if (request.result != UnityWebRequest.Result.Success)
+            Debug.Log(request.error);
+        else
+        { 
+            for (int x = 0; x < userInfo.Count; x++)
             {
-                LevelInfo.instance.name = userName;
-                LevelInfo.instance.userExist = true;
-                if (password == Password.text)
+                string userName = userInfo[x]["name"];
+                string password = userInfo[x]["password"];
+
+                if (userName == name)
                 {
-                    LevelInfo.instance.password = true;
-                    StartCoroutine(GetLevelByUserName(name));
+                    LevelInfo.instance.name = userName;
+                    LevelInfo.instance.userExist = true;
+                    if (password == Password.text)
+                    {
+                        LevelInfo.instance.password = true;
+                        StartCoroutine(GetLevelByUserName(name));
+                    }
+                    else
+                        LevelInfo.instance.password = false;
+                    MainMenu.instance.PlayButton();
+                    break;
                 }
                 else
-                    LevelInfo.instance.password = false;
-                break;
+                    LevelInfo.instance.userExist = false;
+
+                if (name == "")
+                    LevelInfo.instance.userExist = false;
             }
-            else
-                LevelInfo.instance.userExist = false;
         }
     }
 
     public IEnumerator NewUser(string name, string alias, string email, string password)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("name", name);
-        form.AddField("alias", alias);
-        form.AddField("email", email);
-        form.AddField("password", password);
+        print(name);
+        StartCoroutine(DoesUserExist(name));
 
-
-        UnityWebRequest www = UnityWebRequest.Post(InsertNewUser, form);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
-            Debug.Log(www.error);
-        else
+        if (LevelInfo.instance.userExist == false)
         {
-            LevelInfo.instance.userExist = true;
-            MainMenu.instance.PlayButton();
-            MainMenu.instance.LoadInlogCanvas();
+            WWWForm form = new WWWForm();
+            form.AddField("name", name);
+            form.AddField("alias", alias);
+            form.AddField("email", email);
+            form.AddField("password", password);
+
+
+            UnityWebRequest www = UnityWebRequest.Post(InsertNewUser, form);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success) 
+                Debug.Log(www.error);
+            else
+            {
+                LevelInfo.instance.userExist = true;
+                MainMenu.instance.PlayButton();
+                MainMenu.instance.LoadInlogCanvas();
+            }
         }
+        else print($"Gebruiker {name} bestaat al");
     }
 
     public IEnumerator GetLevelByUserName(string name)

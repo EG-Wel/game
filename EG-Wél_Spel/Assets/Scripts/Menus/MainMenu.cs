@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text name;
     [SerializeField] private InputField password;
     [SerializeField] private GameObject readOnly;
+    [SerializeField] private Text wrong;
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class MainMenu : MonoBehaviour
         if (LevelInfo.instance.userExist && LevelInfo.instance.password)
             UnitySceneManager.LoadScene("LevelSelector");
         else if (LevelInfo.instance.userExist && !LevelInfo.instance.password)
-            password.GetComponent<InputField>().text = "Wrong";
+            wrong.GetComponent<Text>().text = "Wrong password";
         else
             LoadRegisterCanvas();
     }
@@ -33,14 +34,14 @@ public class MainMenu : MonoBehaviour
     {
         RegisterCanvas.SetActive(false);
         InlogCanvas.SetActive(true);
-        //readOnly.GetComponent<InputField>().readOnly = false;
     }
 
     public void LoadRegisterCanvas()
     {
+        LevelInfo.instance.name = string.Empty;
+        LevelInfo.instance.userExist = false;
         InlogCanvas.SetActive(false);
         RegisterCanvas.SetActive(true);
-        //readOnly.GetComponent<InputField>().readOnly = true;
     }
 
     public void NewUser() => UnitySceneManager.LoadScene("Uitleg");
