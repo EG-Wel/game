@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelInfo : MonoBehaviour
 {
     public static LevelInfo instance;
-    public string name;
+    public string naam;
     public bool userExist;
     public bool password;
     public Levels[] levels;

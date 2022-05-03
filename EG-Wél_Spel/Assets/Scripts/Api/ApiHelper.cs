@@ -19,7 +19,7 @@ public class ApiHelper : MonoBehaviour
 
     Levels[] currentlevel;
 
-    public string name;
+    public string naam;
 
     public float timeDB;
 
@@ -39,7 +39,7 @@ public class ApiHelper : MonoBehaviour
                 FindObjectOfType<Gongratulations>().Levels(item.id);
             }
         }
-        name = FindObjectOfType<LevelInfo>().name;
+        naam = FindObjectOfType<LevelInfo>().naam;
         StartCoroutine(GetUserData());
         FindObjectOfType<Gongratulations>().level = currentlevel[currentSceneId];
     }
@@ -70,7 +70,7 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
-            if (userName == name)
+            if (userName == naam)
             {
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
                 Instantiate(prefab, parent);
@@ -100,7 +100,7 @@ public class ApiHelper : MonoBehaviour
         string time = Gongratulations.instance.level.playTime.ToString();
         time = time.Replace(',','.');
 
-        string body = String.Format("\"name\" : \"{0}\", \"level\" : \"{1}\", \"time\" : {2}", name, currentScene, time);
+        string body = String.Format("\"name\" : \"{0}\", \"level\" : \"{1}\", \"time\" : {2}", naam, currentScene, time);
         body = "{" + body + "}";
         print(body);
 
@@ -110,7 +110,7 @@ public class ApiHelper : MonoBehaviour
 
         yield return www.SendWebRequest();
 
-        if (www.isNetworkError || www.isHttpError)
+        if (www.result != UnityWebRequest.Result.Success)
             Debug.Log(www.error);
         else
             StartCoroutine(RefreshHsList());
@@ -134,7 +134,7 @@ public class ApiHelper : MonoBehaviour
         {
             string userName = userInfo[x]["name"];
             float userTime = userInfo[x]["time"];
-            if (userName == name)
+            if (userName == naam)
                 timeDB = userTime;
 
             double time = Math.Round(userTime, 3);
@@ -143,7 +143,7 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
-            if (userName == name)
+            if (userName == naam)
             {
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
                 Instantiate(prefab, parent);
@@ -158,11 +158,11 @@ public class ApiHelper : MonoBehaviour
     public IEnumerator NewTime()
     {
         WWWForm form = new WWWForm();
-        form.AddField("name", name);
+        form.AddField("name", naam);
         form.AddField("level", currentSceneId+1);
         form.AddField("time", currentlevel[currentSceneId].playTime.ToString());
 
-        print(name);
+        print(naam);
         print(currentSceneId);
         print(currentlevel[currentSceneId].playTime.ToString());
 

@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu instance;
-    private bool toggle = false;
     [SerializeField] private GameObject InlogCanvas;
     [SerializeField] private GameObject RegisterCanvas;
-    [SerializeField] private Text name;
+    [SerializeField] private Text naam;
     [SerializeField] private InputField password;
     [SerializeField] private GameObject readOnly;
     [SerializeField] private Text wrong;
@@ -27,7 +26,7 @@ public class MainMenu : MonoBehaviour
         else if (LevelInfo.instance.userExist && !LevelInfo.instance.password)
             wrong.GetComponent<Text>().text = "Wrong password";
         else
-            LoadRegisterCanvas();
+            wrong.GetComponent<Text>().text = "User does not exists";
     }
 
     public void LoadInlogCanvas()
@@ -38,11 +37,13 @@ public class MainMenu : MonoBehaviour
 
     public void LoadRegisterCanvas()
     {
-        LevelInfo.instance.name = string.Empty;
+        LevelInfo.instance.naam = string.Empty;
         LevelInfo.instance.userExist = false;
         InlogCanvas.SetActive(false);
         RegisterCanvas.SetActive(true);
     }
+
+    public void ServerUnsucces() => wrong.GetComponent<Text>().text = "Something aint right";
 
     public void NewUser() => UnitySceneManager.LoadScene("Uitleg");
 

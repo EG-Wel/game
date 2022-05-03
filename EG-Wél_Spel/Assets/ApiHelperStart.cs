@@ -40,7 +40,6 @@ public class ApiHelperStart : MonoBehaviour
     
     public IEnumerator DoesUserExist(string name)
     {
-        name.Trim();
         UnityWebRequest request = UnityWebRequest.Get(GetAllUsers);
 
         yield return request.SendWebRequest();
@@ -48,7 +47,10 @@ public class ApiHelperStart : MonoBehaviour
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
 
         if (request.result != UnityWebRequest.Result.Success)
+        {
             Debug.Log(request.error);
+            MainMenu.instance.ServerUnsucces();
+        }
         else
         { 
             for (int x = 0; x < userInfo.Count; x++)
@@ -58,7 +60,7 @@ public class ApiHelperStart : MonoBehaviour
 
                 if (userName == name)
                 {
-                    LevelInfo.instance.name = userName;
+                    LevelInfo.instance.naam = userName;
                     LevelInfo.instance.userExist = true;
                     if (password == Password.text)
                     {
@@ -67,7 +69,6 @@ public class ApiHelperStart : MonoBehaviour
                     }
                     else
                         LevelInfo.instance.password = false;
-                    MainMenu.instance.PlayButton();
                     break;
                 }
                 else
@@ -76,6 +77,7 @@ public class ApiHelperStart : MonoBehaviour
                 if (name == "")
                     LevelInfo.instance.userExist = false;
             }
+                    MainMenu.instance.PlayButton();
         }
     }
 
