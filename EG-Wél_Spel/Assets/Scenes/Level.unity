@@ -6312,6 +6312,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1811071120276015035, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
+      propertyPath: minimap
+      value: 
+      objectReference: {fileID: 1128752832}
+    - target: {fileID: 1811071120276015035, guid: 9b5bbef0bfe06ea4a91b464b45ac2e92, type: 3}
       propertyPath: heartArray.Array.size
       value: 3
       objectReference: {fileID: 0}

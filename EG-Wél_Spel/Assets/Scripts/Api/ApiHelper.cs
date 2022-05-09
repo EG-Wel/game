@@ -71,19 +71,16 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
             if (userName == naam)
-            {
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
-                Instantiate(prefab, parent);
-            }
             else
             {
                 count++;
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 125);
-                Instantiate(prefab, parent);
             }
+                Instantiate(prefab, parent);
         }
         print(count + " => " + userInfo.Count);
-        if (count == userInfo.Count || count == 0)
+        if (currentlevel[currentSceneId].DBTime == 0 || count == userInfo.Count)
             StartCoroutine(NewTime());
         
 
@@ -144,23 +141,18 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
             if (userName == naam)
-            {
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
-                Instantiate(prefab, parent);
-            }
             else
-            {
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 125);
-                Instantiate(prefab, parent);
-            }
+            Instantiate(prefab, parent);
         }
     }
     public IEnumerator NewTime()
     {
         WWWForm form = new WWWForm();
         form.AddField("name", naam);
-        form.AddField("level", currentSceneId+1);
-        form.AddField("time", currentlevel[currentSceneId].playTime.ToString());
+        form.AddField("level", currentlevel[currentSceneId].sceneName);
+        form.AddField("time", currentlevel[currentSceneId].playTime.ToString().Replace(',', '.'));
 
         print(naam);
         print(currentSceneId);

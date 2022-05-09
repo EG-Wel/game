@@ -18,7 +18,7 @@ public class Gongratulations : MonoBehaviour
     [SerializeField] GameObject[] tTBText;
     [SerializeField] Button[] buttons;
 
-    private string lvlText;
+    public string lvlText;
 
     void Start()
     {
@@ -41,27 +41,12 @@ public class Gongratulations : MonoBehaviour
                 tTBText[i].GetComponent<Text>().text = Level01Times[i];
             lvlText = "Level02";
 
-            if (level.playTime < 50f)
-            {
-                print("bronze");
+            if (level.playTime < 30f)
                 putStars(0);
-                //stars[0].SetActive(true);
-            }
-            if (level.playTime < 25f)
-            {
-                print("silver");
+            if (level.playTime < 15f)
                 putStars(1);
-                /*for (int x = 0; x < 2; x++)
-                    stars[x].SetActive(true);*/
-            }
             if (level.playTime < 10f)
-            {
-                print("gold");
                 putStars(2);
-                //cupIcon[2].SetActive(true);
-                /*for (int x = 0; x < 3; x++)
-                    stars[x].SetActive(true);*/
-            }
         }
         if (currentLevel == 1)
         {
@@ -70,25 +55,11 @@ public class Gongratulations : MonoBehaviour
             lvlText = "Level03";
 
             if (level.playTime < 60f)
-            {
-                lockIcon[0].SetActive(false);
-                cupIcon[0].SetActive(true);
-                stars[0].SetActive(true);
-            }
+                putStars(0);
             if (level.playTime < 45f)
-            {
-                lockIcon[1].SetActive(false);
-                cupIcon[1].SetActive(true);
-                for (int x = 0; x < 2; x++)
-                    stars[x].SetActive(true);
-            }
+                putStars(1);
             if (level.playTime < 30f)
-            {
-                lockIcon[2].SetActive(false);
-                cupIcon[2].SetActive(true);
-                for (int x = 0; x < 3; x++)
-                    stars[x].SetActive(true);
-            }
+                putStars(2);
         }
         if (currentLevel == 2)
         {
@@ -97,25 +68,11 @@ public class Gongratulations : MonoBehaviour
 
             lvlText = "Level04";
             if (level.playTime < 45f)
-            {
-                lockIcon[0].SetActive(false);
-                cupIcon[0].SetActive(true);
-                stars[0].SetActive(true);
-            }
+                putStars(0);
             if (level.playTime < 25f)
-            {
-                lockIcon[1].SetActive(false);
-                cupIcon[1].SetActive(true);
-                for (int x = 0; x < 2; x++)
-                    stars[x].SetActive(true);
-            }
+                putStars(1);
             if (level.playTime < 15f)
-            {
-                lockIcon[2].SetActive(false);
-                cupIcon[2].SetActive(true);
-                for (int x = 0; x < 3; x++)
-                    stars[x].SetActive(true);
-            }
+                putStars(2);
         }
     }
 
@@ -131,7 +88,7 @@ public class Gongratulations : MonoBehaviour
 
     public void LoadScene()
     {
-        print(lvlText);
+        print("LoadScene => " + lvlText);
         SceneManager.LoadScene(lvlText);
     }
 }

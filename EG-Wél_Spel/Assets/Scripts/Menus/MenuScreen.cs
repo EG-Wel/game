@@ -39,8 +39,5 @@ public class MenuScreen : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void OnClickQuitGame()
-    {
-        Application.Quit();
-    }
+    void OnClickQuitGame() => Application.Quit();
 }

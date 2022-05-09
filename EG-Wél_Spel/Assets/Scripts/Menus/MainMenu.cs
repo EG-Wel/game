@@ -11,7 +11,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text naam;
     [SerializeField] private InputField password;
     [SerializeField] private GameObject readOnly;
+
+    [Header("===Foutmeldingen===")]
     [SerializeField] private Text wrong;
+
 
     private void Start()
     {
@@ -31,19 +34,21 @@ public class MainMenu : MonoBehaviour
 
     public void LoadInlogCanvas()
     {
+        ApiHelperStart.instance.register = false;
         RegisterCanvas.SetActive(false);
         InlogCanvas.SetActive(true);
     }
 
     public void LoadRegisterCanvas()
     {
+        ApiHelperStart.instance.register = true;
         LevelInfo.instance.naam = string.Empty;
         LevelInfo.instance.userExist = false;
         InlogCanvas.SetActive(false);
         RegisterCanvas.SetActive(true);
     }
 
-    public void ServerUnsucces() => wrong.GetComponent<Text>().text = "Something aint right";
+    public void ServerUnsucces() => wrong.GetComponent<Text>().text = "Couldn't connect to database";
 
     public void NewUser() => UnitySceneManager.LoadScene("Uitleg");
 
