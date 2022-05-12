@@ -6,7 +6,7 @@ public class PlayerDeath : MonoBehaviour
     public Vector3 spawn;
     public GameObject player;
     public GameObject[] heartArray;
-    [SerializeField] private Canvas minimap;
+    public Canvas minimap;
 
     public int death = 0;
 

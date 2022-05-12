@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 fishPositsion;
     public GameObject[] fishs;
     public int totalFishs;
-    
+
     public Text tijd;
 
     float coyoteTime = 0.15f;
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public float LevelTime = 0f;
     private Levels[] levels;
     public Levels level;
+    public GameObject scoreCanvas;
 
     private void Start()
     {
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         currentScene = SceneManager.GetActiveScene();
         sceneControll.instance.Scene(currentScene);
         LevelInfo.instance.currentScene = currentScene;
-        closest = fishs[0]; 
+        closest = fishs[0];
         for (int i = 0; i < levels.Length; i++)
         {
             if (levels[i].sceneName == currentScene.name)
@@ -102,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Door")) 
+        if (collision.gameObject.CompareTag("Door"))
             CheckDoor();
     }
 
@@ -144,14 +145,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (menuActive)
         {
-            player.SetActive(true);
+            player.GetComponent<SpriteRenderer>().enabled = true;
+            FindObjectOfType<PlayerDeath>().minimap.enabled = true;
+            scoreCanvas.SetActive(true);
             menuScreen.SetActive(false);
             menuActive = false;
             Time.timeScale = 1;
         }
         else
         {
-            player.SetActive(false);
+            scoreCanvas.SetActive(false);
+            player.GetComponent<PlayerDeath>().minimap.enabled = false;
+            player.GetComponent<SpriteRenderer>().enabled = false;
+            player.GetComponent<PlayerDeath>().minimap.enabled = false;
             Time.timeScale = 0;
             menuScreen.SetActive(true);
             menuActive = true;
@@ -222,22 +228,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void FishClose()
     {
-        if (fishs.Length == 0 && FindObjectOfType<ScoreManager>().score == totalFishs)
+        if (!menuActive)
         {
-            closest = deur;
-        }
-        else
-        {
-            closest = fishs[0];
-            foreach (GameObject fish in fishs)
+            if (fishs.Length == 0 && FindObjectOfType<ScoreManager>().score == totalFishs) closest = deur;
+            else
             {
-                if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+                closest = fishs[0];
+                foreach (GameObject fish in fishs)
                 {
-                    if (fish.activeSelf)
-                        closest = fish;
+                    if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+                    {
+                        if (fish.activeSelf)
+                            closest = fish;
+                    }
                 }
             }
+            wind.Show(closest.transform.position);
         }
-        wind.Show(closest.transform.position);
     }
 }
