@@ -560,9 +560,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InlogCanvas: {fileID: 0}
   RegisterCanvas: {fileID: 0}
-  name: {fileID: 0}
+  naam: {fileID: 0}
   password: {fileID: 0}
   readOnly: {fileID: 0}
+  wrong: {fileID: 0}
 --- !u!1 &1095609976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,6 +1469,10 @@ PrefabInstance:
     - target: {fileID: 2035675870507089229, guid: 70dd24111583c184188c7f3d448fc7f8, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035675870507089229, guid: 70dd24111583c184188c7f3d448fc7f8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 190.15
       objectReference: {fileID: 0}
     - target: {fileID: 2035675870507089229, guid: 70dd24111583c184188c7f3d448fc7f8, type: 3}
       propertyPath: m_AnchoredPosition.x

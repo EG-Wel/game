@@ -32,7 +32,6 @@ public class ApiHelper : MonoBehaviour
         {
             if (item.isCurrent)
             {
-                print(item.id);
                 currentScene = item.sceneName;
                 currentSceneId = item.id;
                 FindObjectOfType<Gongratulations>().level = item;
@@ -48,19 +47,16 @@ public class ApiHelper : MonoBehaviour
 
     public IEnumerator GetUserData()
     {
+        print("ApiHelper => GetUserData");
         UnityWebRequest request = UnityWebRequest.Get(GetScoresByLevel + currentScene);
-
-        print(GetScoresByLevel + currentScene);
 
         yield return request.SendWebRequest();
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
 
-        print(userInfo);
         int count = 0;
         for (int x = 0; x < userInfo.Count; x++)
         {
-            print(userInfo[x]);
             string userName = userInfo[x]["name"];
             float userTime = userInfo[x]["time"];
 
@@ -79,27 +75,25 @@ public class ApiHelper : MonoBehaviour
             }
                 Instantiate(prefab, parent);
         }
-        print(count + " => " + userInfo.Count);
+
         if (currentlevel[currentSceneId].DBTime == 0 || count == userInfo.Count)
             StartCoroutine(NewTime());
-        
 
-        print(currentlevel[currentSceneId].playTime + " => " + currentlevel[currentSceneId].DBTime);
         if (currentlevel[currentSceneId].playTime < currentlevel[currentSceneId].DBTime)
-            StartCoroutine(putTime());
+            StartCoroutine(putTime(currentlevel[currentSceneId].playTime));
         
     }
 
-    public IEnumerator putTime()
+    public IEnumerator putTime(float tijd)
     {
+        print("ApiHelper => putTime");
         string uri = "https://localhost:7080/Scores/PutTimeByLevel";
 
-        string time = Gongratulations.instance.level.playTime.ToString();
+        string time = tijd.ToString();
         time = time.Replace(',','.');
 
         string body = String.Format("\"name\" : \"{0}\", \"level\" : \"{1}\", \"time\" : {2}", naam, currentScene, time);
         body = "{" + body + "}";
-        print(body);
 
         byte[] myData = System.Text.Encoding.UTF8.GetBytes(body);
         UnityWebRequest www = UnityWebRequest.Put(uri, myData);
@@ -115,6 +109,8 @@ public class ApiHelper : MonoBehaviour
 
     public IEnumerator RefreshHsList()
     {
+        print("ApiHelper => RefreshHsList");
+
         foreach (Transform child in parent.transform)
             Destroy(child.gameObject);
 
@@ -149,14 +145,11 @@ public class ApiHelper : MonoBehaviour
     }
     public IEnumerator NewTime()
     {
+        print("ApiHelper => NewTime");
         WWWForm form = new WWWForm();
         form.AddField("name", naam);
         form.AddField("level", currentlevel[currentSceneId].sceneName);
         form.AddField("time", currentlevel[currentSceneId].playTime.ToString().Replace(',', '.'));
-
-        print(naam);
-        print(currentSceneId);
-        print(currentlevel[currentSceneId].playTime.ToString());
 
         UnityWebRequest www = UnityWebRequest.Post("https://localhost:7080/Scores/InsertNewTimeByLevel", form);
         yield return www.SendWebRequest();

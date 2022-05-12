@@ -3,7 +3,6 @@ using SimpleJSON;
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
-using System.Net.Http;
 
 public class ApiHelperStart : MonoBehaviour
 {
@@ -38,6 +37,7 @@ public class ApiHelperStart : MonoBehaviour
     }
 
     public void ReadNameInput(string s) => Name.text = s.Trim();
+
     public void ReadregisterNameInput(string s)
     {
         registerName.text = s.Trim();
@@ -68,6 +68,7 @@ public class ApiHelperStart : MonoBehaviour
 
     public void AddNew()
     {
+        print("ApiHelperStart => AddNew");
         StartCoroutine(DoesUserExist(registerName.text));
 
         if (registerName.text != "" && Email.text != "" && registerPassword.text != "" && registerPassword.text.Length >= 6 &&
@@ -77,6 +78,7 @@ public class ApiHelperStart : MonoBehaviour
 
     public void refresh()
     {
+        print("ApiHelperStart => refresh");
 
         if (LevelInfo.instance.userExist)
             NameWrong.GetComponent<Text>().enabled = true;
@@ -101,6 +103,7 @@ public class ApiHelperStart : MonoBehaviour
 
     public IEnumerator DoesUserExist(string name)
     {
+        print("ApiHelperStart => DoesUserExist");
         UnityWebRequest request = UnityWebRequest.Get(GetAllUsers);
 
         yield return request.SendWebRequest();
@@ -119,7 +122,6 @@ public class ApiHelperStart : MonoBehaviour
                 string userName = userInfo[x]["name"];
                 string password = userInfo[x]["password"];
 
-                print(register);
                 if (register)
                 {
                     for (int i = 0; i < userInfo.Count; i++)
@@ -148,8 +150,6 @@ public class ApiHelperStart : MonoBehaviour
                     }
                     refresh();
                 }
-
-
                 if (userName == name)
                 {
                     LevelInfo.instance.naam = userName;
@@ -175,7 +175,7 @@ public class ApiHelperStart : MonoBehaviour
 
     public IEnumerator NewUser(string name, string alias, string email, string password)
     {
-        print(name);
+        print("ApiHelperStart => NewUser");
         StartCoroutine(DoesUserExist(name));
 
         if (!LevelInfo.instance.userExist)
@@ -185,7 +185,6 @@ public class ApiHelperStart : MonoBehaviour
             form.AddField("alias", alias);
             form.AddField("email", email);
             form.AddField("password", password);
-
 
             UnityWebRequest www = UnityWebRequest.Post(InsertNewUser, form);
             yield return www.SendWebRequest();
@@ -204,8 +203,9 @@ public class ApiHelperStart : MonoBehaviour
 
     public IEnumerator GetLevelByUserName(string name)
     {
+        print("ApiHelperStart => GetLevelByUserName");
+
         string uri = GetAllLevelsByUser + name;
-        print(uri);
         UnityWebRequest request = UnityWebRequest.Get(uri);
 
         yield return request.SendWebRequest();

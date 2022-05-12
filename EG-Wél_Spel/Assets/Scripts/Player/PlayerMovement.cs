@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 fishPositsion;
     public GameObject[] fishs;
-
+    public int totalFishs;
+    
     public Text tijd;
 
     float coyoteTime = 0.15f;
@@ -58,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
                 level = LevelInfo.instance.levels[i];
         }
         FindObjectOfType<LevelInfo>().levels = levels;
+        totalFishs = fishs.Length;
+        FindObjectOfType<ScoreManager>().ChangeScore(0);
     }
 
     void Update()
@@ -105,10 +108,13 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckDoor()
     {
-        SceneManager.LoadScene("Congratulations");
-        controller.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
-        facingRight = true;
-        FindObjectOfType<AudioManager>().Play("Door");
+        if (totalFishs == FindObjectOfType<ScoreManager>().score)
+        {
+            SceneManager.LoadScene("Congratulations");
+            controller.transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+            facingRight = true;
+            FindObjectOfType<AudioManager>().Play("Door");
+        }
     }
 
     // If player falling drag increases so it looks like he is gliding
@@ -216,15 +222,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void FishClose()
     {
-        closest = fishs[0];
-        foreach (GameObject fish in fishs)
+        if (fishs.Length == 0 && FindObjectOfType<ScoreManager>().score == totalFishs)
         {
-            if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+            closest = deur;
+        }
+        else
+        {
+            closest = fishs[0];
+            foreach (GameObject fish in fishs)
             {
-                if (!ScoreManager.instance.Enough(currentScene))
-                    closest = fish;
-                else
-                    closest = deur;
+                if (Vector3.Distance(fish.transform.position, playerRb.transform.position) < Vector3.Distance(closest.transform.position, playerRb.transform.position))
+                {
+                    if (fish.activeSelf)
+                        closest = fish;
+                }
             }
         }
         wind.Show(closest.transform.position);

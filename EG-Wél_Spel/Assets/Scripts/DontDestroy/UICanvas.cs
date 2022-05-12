@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using SimpleJSON;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class UICanvas : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class UICanvas : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-        CheckPlayed();
+        StartCoroutine(GetLevelByUserName(FindObjectOfType<LevelInfo>().naam));
     }
 
     private void FixedUpdate()
@@ -28,8 +30,25 @@ public class UICanvas : MonoBehaviour
         }
     }
 
-    private void CheckPlayed()
+    public IEnumerator GetLevelByUserName(string name)
     {
-        
+        print("UICanvas => GetLevelByUserName");
+
+        string uri = "https://localhost:7080/Scores/spGetAllLevelsByUser" + name;
+        UnityWebRequest request = UnityWebRequest.Get(uri);
+
+        yield return request.SendWebRequest();
+
+        JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
+
+        for (int x = 0; x < userInfo.Count; x++)
+        {
+            string levelName = userInfo[x]["name"];
+            for (int i = 0; i < FindObjectOfType<LevelInfo>().levels.Length; i++)
+            {
+                if (FindObjectOfType<LevelInfo>().levels[i].sceneName == levelName)
+                    FindObjectOfType<sceneControll>().lvl[i + 1] = true;
+            }
+        }
     }
 }

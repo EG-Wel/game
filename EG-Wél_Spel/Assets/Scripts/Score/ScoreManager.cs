@@ -21,26 +21,22 @@ public class ScoreManager : MonoBehaviour
 
     public void ChangeScore(int points)
     {
+        // [4,8,4,5]
         if (doorText != null)
         {
             // Add points to score
             score += points;
 
             // Display points on display
-            text.text = score.ToString();
+            //text.text = score.ToString();
 
             // Check what door/lvl player is on
             // Display points above door
-            if (currentScene.name == "Level01")
-                addString = "/4";
-            if (currentScene.name == "Level02")
-                addString = "/8";
-            if (currentScene.name == "Level03")
-                addString = "/4";
-            if (currentScene.name == "Level04")
-                addString = "/5";
 
-            text.text = score.ToString() + addString;
+            text.text = $"{score}/{FindObjectOfType<PlayerMovement>().totalFishs}";
+
+
+            /*text.text = score.ToString() + addString;*/
             doorText.text = text.text;
         }
     }

@@ -8,6 +8,7 @@ public class sceneControll : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
         if (instance == null)
             instance = this;
     }

@@ -30,12 +30,17 @@ public class MenuScreen : MonoBehaviour
 
     void OnClickSettings()
     {
-        /// nothing yet
+        restartGame.RestartButton();
+        Time.timeScale = 1;
     }
 
     void OnClickRestart()
     {
-        restartGame.RestartButton();
+        for (int i = 0; i < LevelInfo.instance.levels.Length; i++)
+        {
+            if (LevelInfo.instance.levels[i].isCurrent)
+                SceneManager.LoadScene(LevelInfo.instance.levels[i].sceneName);
+        }
         Time.timeScale = 1;
     }
 

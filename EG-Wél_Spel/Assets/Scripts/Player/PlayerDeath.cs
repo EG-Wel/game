@@ -12,7 +12,7 @@ public class PlayerDeath : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Void") || collision.gameObject.CompareTag("Walrus"))
+        if (collision.gameObject.CompareTag("Void") || collision.gameObject.CompareTag("Bird"))
         {
             death++;
             for (int i = 0; i < death; i++)
