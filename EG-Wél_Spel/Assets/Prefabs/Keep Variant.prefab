@@ -100,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6021528021518775636, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_Name
-      value: Keep
+      value: Keep Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6021528021518775636, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_IsActive
@@ -150,9 +150,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6021528021994781857, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
+      propertyPath: m_Text
+      value: Levels
+      objectReference: {fileID: 0}
     - target: {fileID: 6021528022221264030, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: doorText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021528022230030453, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
+      propertyPath: m_Name
+      value: btnLevels
       objectReference: {fileID: 0}
     - target: {fileID: 6021528022906827392, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_Lens.FarClipPlane
@@ -168,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6021528023130415158, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.771963
+      value: -0.7719449
       objectReference: {fileID: 0}
     - target: {fileID: 6021528023130415158, guid: 29f3755fc4b8ee44b9618a6cf7afa705, type: 3}
       propertyPath: m_LocalPosition.z

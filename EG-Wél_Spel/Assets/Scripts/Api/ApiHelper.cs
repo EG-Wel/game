@@ -66,7 +66,8 @@ public class ApiHelper : MonoBehaviour
             prefab.transform.Find("Name").GetComponent<Text>().text = userName;
             prefab.transform.Find("Time").GetComponent<Text>().text = time.ToString();
 
-            if (userName == naam)
+
+            if (userName == FindObjectOfType<LevelInfo>().naam)
                 prefab.GetComponent<Image>().color = new Color32(245, 75, 0, 225);
             else
             {
@@ -81,7 +82,6 @@ public class ApiHelper : MonoBehaviour
 
         if (currentlevel[currentSceneId].playTime < currentlevel[currentSceneId].DBTime)
             StartCoroutine(putTime(currentlevel[currentSceneId].playTime));
-        
     }
 
     public IEnumerator putTime(float tijd)

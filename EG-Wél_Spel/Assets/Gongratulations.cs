@@ -18,7 +18,8 @@ public class Gongratulations : MonoBehaviour
     [SerializeField] GameObject[] tTBText;
     [SerializeField] Button[] buttons;
 
-    public string lvlText;
+    public string lvlNext;
+    public string lvlPrev;
 
     void Start()
     {
@@ -33,14 +34,16 @@ public class Gongratulations : MonoBehaviour
         string[] Level01Times = { "0:10" , "0:15" , "0:30" };
         string[] Level02Times = { "0:30" , "0:45" , "0:60" };
         string[] Level03Times = { "0:15" , "0:25" , "0:45" };
+        string[] Level04Times = { "0:45" , "0:60" , "1:30" };
+
 
         if (currentLevel == 0)
         {
-            print(level.playTime);
             for (int i = 0; i < Level01Times.Length; i++)
                 tTBText[i].GetComponent<Text>().text = Level01Times[i];
-            lvlText = "Level02";
 
+            lvlNext = $"Level0{currentLevel + 2}";
+            lvlPrev = $"Level0{currentLevel + 1}";
             if (level.playTime < 30f)
                 putStars(0);
             if (level.playTime < 15f)
@@ -52,8 +55,9 @@ public class Gongratulations : MonoBehaviour
         {
             for (int i = 0; i < Level02Times.Length; i++)
                 tTBText[i].GetComponent<Text>().text = Level02Times[i];
-            lvlText = "Level03";
 
+            lvlNext = $"Level0{currentLevel + 2}";
+            lvlPrev = $"Level0{currentLevel + 1}";
             if (level.playTime < 60f)
                 putStars(0);
             if (level.playTime < 45f)
@@ -66,12 +70,27 @@ public class Gongratulations : MonoBehaviour
             for (int i = 0; i < Level03Times.Length; i++)
                 tTBText[i].GetComponent<Text>().text = Level03Times[i];
 
-            lvlText = "Level04";
+            lvlNext = $"Level0{currentLevel + 2}";
+            lvlPrev = $"Level0{currentLevel + 1}";
             if (level.playTime < 45f)
                 putStars(0);
             if (level.playTime < 25f)
                 putStars(1);
             if (level.playTime < 15f)
+                putStars(2);
+        }
+        if (currentLevel == 3)
+        {
+            for (int i = 0; i < Level04Times.Length; i++)
+                tTBText[i].GetComponent<Text>().text = Level04Times[i];
+
+            lvlNext = $"Level0{currentLevel + 2}";
+            lvlPrev = $"Level0{currentLevel + 1}";
+            if (level.playTime < 45f)
+                putStars(0);
+            if (level.playTime < 60f)
+                putStars(1);
+            if (level.playTime < 75f)
                 putStars(2);
         }
     }
@@ -86,9 +105,11 @@ public class Gongratulations : MonoBehaviour
 
     public string FormatTime(float time) => Math.Round(time, 3).ToString();
 
-    public void LoadScene()
+    public void LoadScene(string welke)
     {
-        print("LoadScene => " + lvlText);
-        SceneManager.LoadScene(lvlText);
+        if (welke == "next")
+            SceneManager.LoadScene(lvlNext);
+        else if (welke == "prev") 
+            SceneManager.LoadScene(lvlPrev);
     }
 }

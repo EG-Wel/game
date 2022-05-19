@@ -61,9 +61,7 @@ public class MainMenu : MonoBehaviour
         UnitySceneManager.LoadScene("Uitleg");
     }
 
-    public void LoadScene(string levelName)
-    {
-        print("MainMenu => LoadScene");
-        UnitySceneManager.LoadScene(levelName);
-    }
+    public void LoadScene(string levelName) => UnitySceneManager.LoadScene(levelName);
+    
+    public void LoadSceneInt(int levelId) => UnitySceneManager.LoadScene(levelId);
 }

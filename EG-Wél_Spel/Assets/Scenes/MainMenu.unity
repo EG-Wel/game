@@ -170,7 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InlogCanvas: {fileID: 807651037}
   RegisterCanvas: {fileID: 111098165}
-  naam: {fileID: 0}
   password: {fileID: 1418850116}
   readOnly: {fileID: 2132503706}
   wrong: {fileID: 458023149}
@@ -4148,6 +4147,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.data[0].completed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[0].isCurrent
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}

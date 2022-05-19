@@ -8,10 +8,11 @@ public class ApiHelperStart : MonoBehaviour
 {
     public static ApiHelperStart instance;
     private string GetAllUsers = "https://localhost:7080/Scores/GetAllUsers";
-    private string GetAllLevelsByUser = "https://localhost:7080/Scores/spGetAllLevelsByUser";
+    private string GetAllLevelsByUser = "https://localhost:7080/Scores/GetAllLevelsByUser";
     private string InsertNewUser = "https://localhost:7080/Scores/InsertNewUser";
+    private string GetUserUri = "https://localhost:7080/Scores/GetUser";
 
-    [Header("===GameObjects===")]
+    [Header("===InputFields===")]
     [SerializeField] Text Name;
     [SerializeField] Text registerName;
     [SerializeField] Text Alias;
@@ -38,37 +39,20 @@ public class ApiHelperStart : MonoBehaviour
 
     public void ReadNameInput(string s) => Name.text = s.Trim();
 
-    public void ReadregisterNameInput(string s)
-    {
-        registerName.text = s.Trim();
-        StartCoroutine(DoesUserExist(registerName.text));
-    }
+    public void ReadregisterNameInput(string s) => registerName.text = s.Trim();
 
     public void ReadPasswordInput(string s) => Password.text = s.Trim();
 
-    public void ReadregisterPasswordInput(string s)
-    {
-        registerPassword.text = s.Trim();
-        StartCoroutine(DoesUserExist(registerName.text));
-    }
+    public void ReadregisterPasswordInput(string s) => registerPassword.text = s.Trim();
 
-    public void ReadAliaswInput(string s)
-    {
-        Alias.text = s.Trim();
-        StartCoroutine(DoesUserExist(registerName.text));
-    }
+    public void ReadAliaswInput(string s) => Alias.text = s.Trim();
 
-    public void ReadEmailInput(string s)
-    {
-        Email.text = s.Trim();
-        StartCoroutine(DoesUserExist(registerName.text));
-    }
+    public void ReadEmailInput(string s) => Email.text = s.Trim();
 
-    public void Exists() => StartCoroutine(DoesUserExist(Name.text));
+    public void Exists() => StartCoroutine(GetUser(Name.text, Password.text));
 
     public void AddNew()
     {
-        print("ApiHelperStart => AddNew");
         StartCoroutine(DoesUserExist(registerName.text));
 
         if (registerName.text != "" && Email.text != "" && registerPassword.text != "" && registerPassword.text.Length >= 6 &&
@@ -78,8 +62,6 @@ public class ApiHelperStart : MonoBehaviour
 
     public void refresh()
     {
-        print("ApiHelperStart => refresh");
-
         if (LevelInfo.instance.userExist)
             NameWrong.GetComponent<Text>().enabled = true;
         else
@@ -103,79 +85,69 @@ public class ApiHelperStart : MonoBehaviour
 
     public IEnumerator DoesUserExist(string name)
     {
-        print("ApiHelperStart => DoesUserExist");
         UnityWebRequest request = UnityWebRequest.Get(GetAllUsers);
 
         yield return request.SendWebRequest();
 
         JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
 
-        if (request.result != UnityWebRequest.Result.Success)
+        for (int x = 0; x < userInfo.Count; x++)
         {
-            Debug.Log(request.error);
-            MainMenu.instance.ServerUnsucces();
-        }
-        else
-        { 
-            for (int x = 0; x < userInfo.Count; x++)
+            string userName = userInfo[x]["name"];
+            string password = userInfo[x]["password"];
+
+            if (register)
             {
-                string userName = userInfo[x]["name"];
-                string password = userInfo[x]["password"];
-
-                if (register)
+                for (int i = 0; i < userInfo.Count; i++)
                 {
-                    for (int i = 0; i < userInfo.Count; i++)
-                    {
-                        string alias = userInfo[i]["alias"];
+                    string alias = userInfo[i]["alias"];
 
-                        if (alias.ToLower() == Alias.text.ToLower())
-                        {
-                            aliasExist = true;
-                            break;
-                        }
-                        else 
-                            aliasExist = false;
-                    }
-                    for (int z = 0; z < userInfo.Count; z++)
+                    if (alias.ToLower() == Alias.text.ToLower())
                     {
-                        string email = userInfo[z]["email"];
-
-                        if (email.ToLower() == Email.text.ToLower())
-                        {
-                            emailExist = true;
-                            break;
-                        }
-                        else 
-                            emailExist = false;
+                        aliasExist = true;
+                        break;
                     }
-                    refresh();
+                    else 
+                        aliasExist = false;
                 }
-                if (userName == name)
+                for (int z = 0; z < userInfo.Count; z++)
                 {
-                    LevelInfo.instance.naam = userName;
-                    LevelInfo.instance.userExist = true;
-                    if (password == Password.text)
+                    string email = userInfo[z]["email"];
+
+                    if (email.ToLower() == Email.text.ToLower())
                     {
-                        LevelInfo.instance.password = true;
-                        StartCoroutine(GetLevelByUserName(name));
+                        emailExist = true;
+                        break;
                     }
-                    else
-                        LevelInfo.instance.password = false;
-                    break;
+                    else 
+                        emailExist = false;
+                }
+                refresh();
+            }
+            if (userName == name)
+            {
+                LevelInfo.instance.naam = userName;
+                LevelInfo.instance.userExist = true;
+                if (password == Password.text)
+                {
+                    LevelInfo.instance.password = true;
+                    StartCoroutine(GetLevelByUserName(name));
                 }
                 else
-                    LevelInfo.instance.userExist = false;
-
-                if (name == "")
-                    LevelInfo.instance.userExist = false;
+                    LevelInfo.instance.password = false;
+                break;
             }
-            MainMenu.instance.PlayButton();
+            else
+                LevelInfo.instance.userExist = false;
+
+            if (name == "")
+                LevelInfo.instance.userExist = false;
         }
+        MainMenu.instance.PlayButton();
     }
 
     public IEnumerator NewUser(string name, string alias, string email, string password)
     {
-        print("ApiHelperStart => NewUser");
         StartCoroutine(DoesUserExist(name));
 
         if (!LevelInfo.instance.userExist)
@@ -189,22 +161,14 @@ public class ApiHelperStart : MonoBehaviour
             UnityWebRequest www = UnityWebRequest.Post(InsertNewUser, form);
             yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success) 
-                Debug.Log(www.error);
-            else
-            {
-                LevelInfo.instance.userExist = true;
-                MainMenu.instance.PlayButton();
-                MainMenu.instance.LoadInlogCanvas();
-            }
+            LevelInfo.instance.userExist = true;
+            MainMenu.instance.PlayButton();
+            MainMenu.instance.LoadInlogCanvas();
         }
-        else print($"Gebruiker {name} bestaat al");
     }
 
     public IEnumerator GetLevelByUserName(string name)
     {
-        print("ApiHelperStart => GetLevelByUserName");
-
         string uri = GetAllLevelsByUser + name;
         UnityWebRequest request = UnityWebRequest.Get(uri);
 
@@ -225,6 +189,24 @@ public class ApiHelperStart : MonoBehaviour
                     sceneControll.instance.lvl[i+1] = true;
                 }
             }
+        }
+        MainMenu.instance.PlayButton();
+    }
+
+    public IEnumerator GetUser(string name, string password)
+    {
+        UnityWebRequest request = UnityWebRequest.Get($"{GetUserUri}{name}/{password}");
+
+        yield return request.SendWebRequest();
+
+        JSONNode userInfo = JSON.Parse(request.downloadHandler.text);
+
+        if (userInfo)
+        {
+            LevelInfo.instance.naam = name;
+            LevelInfo.instance.userExist = true;
+            LevelInfo.instance.password = true; 
+            StartCoroutine(GetLevelByUserName(name));
         }
         MainMenu.instance.PlayButton();
     }

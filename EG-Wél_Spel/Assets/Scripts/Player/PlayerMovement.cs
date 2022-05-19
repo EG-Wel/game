@@ -121,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
     // If player falling drag increases so it looks like he is gliding
     void DraggUpdate(Rigidbody2D rb)
     {
-
         if (rb.velocity.y < 0)
             rb.drag = 5f;
         else

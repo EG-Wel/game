@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using CodeMonkey.Utils;
 
-public class Window_QuestPointer : MonoBehaviour {
+public class Window_QuestPointer : MonoBehaviour 
+{
 
     [SerializeField] private Camera uiCamera;
-    [SerializeField]private RectTransform pointerRectTransform;
+    [SerializeField] private RectTransform pointerRectTransform;
 
     private Vector3 targetPosition;
     private Vector3 targetPositionScreenPoint;
@@ -27,7 +26,6 @@ public class Window_QuestPointer : MonoBehaviour {
         float borderSize = 100f;
         targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
         isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
-
         if (isOffScreen)
         {            
             RotatePointerTowardsTargetPosition();

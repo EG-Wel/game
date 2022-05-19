@@ -11,8 +11,6 @@ public class ScoreManager : MonoBehaviour
 
     public Scene currentScene;
 
-    private string addString;
-
     void Start()
     {
         if (instance == null)
@@ -39,19 +37,5 @@ public class ScoreManager : MonoBehaviour
             /*text.text = score.ToString() + addString;*/
             doorText.text = text.text;
         }
-    }
-
-    public bool Enough(Scene scene)
-    {
-        if (scene.name == "Level01" && doorText.text == "4/4")
-            return true;
-        else if (scene.name == "Level02" && doorText.text == "8/8")
-            return true;
-        else if (scene.name == "Level03" && doorText.text == "4/4")
-            return true;
-        else if (scene.name == "Level04" && doorText.text == "5/5")
-            return true;
-        else
-            return false;
     }
 }

@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level04.unity
     guid: 824044a08fe66bf4fa496b72b963fd89
+  - enabled: 1
+    path: Assets/FurnishedCabin/Scenes/Demo.unity
+    guid: 0bce5907d797a4cd8b0660dc119867e8
   m_configObjects: {}
