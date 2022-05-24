@@ -47,7 +47,6 @@ public class ApiHelper : MonoBehaviour
 
     public IEnumerator GetUserData()
     {
-        print("ApiHelper => GetUserData");
         UnityWebRequest request = UnityWebRequest.Get(GetScoresByLevel + currentScene);
 
         yield return request.SendWebRequest();
@@ -86,7 +85,6 @@ public class ApiHelper : MonoBehaviour
 
     public IEnumerator putTime(float tijd)
     {
-        print("ApiHelper => putTime");
         string uri = "https://localhost:7080/Scores/PutTimeByLevel";
 
         string time = tijd.ToString();
@@ -109,7 +107,6 @@ public class ApiHelper : MonoBehaviour
 
     public IEnumerator RefreshHsList()
     {
-        print("ApiHelper => RefreshHsList");
 
         foreach (Transform child in parent.transform)
             Destroy(child.gameObject);
@@ -145,7 +142,6 @@ public class ApiHelper : MonoBehaviour
     }
     public IEnumerator NewTime()
     {
-        print("ApiHelper => NewTime");
         WWWForm form = new WWWForm();
         form.AddField("name", naam);
         form.AddField("level", currentlevel[currentSceneId].sceneName);

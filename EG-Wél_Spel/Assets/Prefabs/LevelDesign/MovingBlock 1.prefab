@@ -325,12 +325,8 @@ MonoBehaviour:
   rb: {fileID: 8549900452492952736}
   speed: 2
   distance: 1
-  useRandomSpeed: 0
-  useRandomDistance: 0
-  randomSpeedMin: 2
-  randomSpeedMax: 5
-  randomDistanceMin: 1
-  randomDistanceMax: 6
+  wallMaterial: {fileID: 6200000, guid: 15b67b5884f77fa47addb27dfbfac573, type: 2}
+  moving: {fileID: 6200000, guid: 496705cfbe6977d4fb7dbeb74f95cb7e, type: 2}
 --- !u!50 &8549900452492952736
 Rigidbody2D:
   serializedVersion: 4

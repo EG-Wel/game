@@ -32,8 +32,6 @@ public class UICanvas : MonoBehaviour
 
     public IEnumerator GetLevelByUserName(string name)
     {
-        print("UICanvas => GetLevelByUserName" + $" {name}");
-
         string uri = "https://localhost:7080/Scores/GetAllLevelsByUser" + name;
         UnityWebRequest request = UnityWebRequest.Get(uri);
 

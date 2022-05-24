@@ -4095,7 +4095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.data[1].id
@@ -4108,6 +4108,10 @@ PrefabInstance:
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.data[3].id
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[4].id
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.data[0].name
@@ -4168,6 +4172,10 @@ PrefabInstance:
     - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
       propertyPath: levels.Array.data[3].sceneName
       value: Level04
+      objectReference: {fileID: 0}
+    - target: {fileID: 439243374714889757, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}
+      propertyPath: levels.Array.data[4].sceneName
+      value: Level05
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 439243374714889747, guid: 7930227e9004d5a48a81fa42c3c1fbdb, type: 3}

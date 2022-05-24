@@ -16,6 +16,7 @@ TagManager:
   - Walrus
   - DoorDetection
   - Nose
+  - Mirror
   layers:
   - Default
   - TransparentFX

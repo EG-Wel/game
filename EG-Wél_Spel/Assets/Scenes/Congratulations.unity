@@ -532,12 +532,37 @@ MonoBehaviour:
   - {fileID: 1746278516}
   - {fileID: 1836927894}
   - {fileID: 7240567141013360066}
-  buttons:
-  - {fileID: 559478800}
-  - {fileID: 0}
-  - {fileID: 1496367838}
-  lvlNext: 
-  lvlPrev: 
+  lvlTimes:
+  - levelName: Level01
+    timeInt: 0a0000000f0000001e000000
+    timeString:
+    - 0:10
+    - 0:15
+    - 0:30
+  - levelName: Level02
+    timeInt: 1e0000002d0000003c000000
+    timeString:
+    - 0:30
+    - 0:45
+    - 1:00
+  - levelName: Level03
+    timeInt: 0f000000190000002d000000
+    timeString:
+    - 0:15
+    - 0:25
+    - 0:45
+  - levelName: Level04
+    timeInt: 2d0000003c0000005a000000
+    timeString:
+    - 0:45
+    - 1:00
+    - 1:30
+  - levelName: Level05
+    timeInt: 1e0000002d0000003c000000
+    timeString:
+    - 0:30
+    - 0:45
+    - 1:00
 --- !u!4 &173064849
 Transform:
   m_ObjectHideFlags: 0

@@ -10,6 +10,9 @@ public class MovePlatform : MonoBehaviour
     [SerializeField] private int speed = 5;
     [SerializeField] private int distance = 5;
 
+    [SerializeField] private PhysicsMaterial2D wallMaterial;
+    [SerializeField] private PhysicsMaterial2D moving;
+
     private int direction;
     private Vector3 startPos;
 
@@ -20,20 +23,24 @@ public class MovePlatform : MonoBehaviour
         RandomStartDir();    
     }
 
-
     // Update is called once per frame
     void Update() => Move();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isJumping)
-            collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 10;
+            collision.gameObject.GetComponent<Rigidbody2D>().sharedMaterial = moving;
+    }
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !collision.gameObject.GetComponent<PlayerMovement>().isJumping)
+            collision.gameObject.GetComponent<Rigidbody2D>().sharedMaterial = moving;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 2;
+            collision.gameObject.GetComponent<Rigidbody2D>().sharedMaterial = wallMaterial;
     }
 
     private void RandomStartDir()

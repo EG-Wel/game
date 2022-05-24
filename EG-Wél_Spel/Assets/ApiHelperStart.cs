@@ -107,7 +107,7 @@ public class ApiHelperStart : MonoBehaviour
                         aliasExist = true;
                         break;
                     }
-                    else 
+                    else
                         aliasExist = false;
                 }
                 for (int z = 0; z < userInfo.Count; z++)
@@ -119,7 +119,7 @@ public class ApiHelperStart : MonoBehaviour
                         emailExist = true;
                         break;
                     }
-                    else 
+                    else
                         emailExist = false;
                 }
                 refresh();

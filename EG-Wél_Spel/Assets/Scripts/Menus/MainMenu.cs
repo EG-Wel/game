@@ -22,7 +22,6 @@ public class MainMenu : MonoBehaviour
 
     public void PlayButton()
     {
-        print("MainMenu => PlayButton");
         if (LevelInfo.instance.userExist && LevelInfo.instance.password)
             UnitySceneManager.LoadScene("LevelSelector");
         else if (LevelInfo.instance.userExist && !LevelInfo.instance.password)
@@ -33,7 +32,6 @@ public class MainMenu : MonoBehaviour
 
     public void LoadInlogCanvas()
     {
-        print("MainMenu => LoadInlogCanvas");
         ApiHelperStart.instance.register = false;
         RegisterCanvas.SetActive(false);
         InlogCanvas.SetActive(true);
@@ -41,7 +39,6 @@ public class MainMenu : MonoBehaviour
 
     public void LoadRegisterCanvas()
     {
-        print("MainMenu => LoadRegisterCanvas");
         ApiHelperStart.instance.register = true;
         LevelInfo.instance.naam = string.Empty;
         LevelInfo.instance.userExist = false;
@@ -51,13 +48,11 @@ public class MainMenu : MonoBehaviour
 
     public void ServerUnsucces()
     {
-        print("MainMenu => ServerUnsucces");
         wrong.GetComponent<Text>().text = "Cannot connect to destination host";
     }
 
     public void NewUser()
     {
-        print("MainMenu => NewUser");
         UnitySceneManager.LoadScene("Uitleg");
     }
 
