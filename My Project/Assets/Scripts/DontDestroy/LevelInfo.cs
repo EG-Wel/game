@@ -19,7 +19,6 @@ public class LevelInfo : MonoBehaviour
     private void Update()
     {
         currentScene = SceneManager.GetActiveScene();
-        print(currentScene.name);
     }
 
     public string GetCurrentScene()

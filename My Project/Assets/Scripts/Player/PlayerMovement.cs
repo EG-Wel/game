@@ -217,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FishClose()
     {
+        print(this.currentScene.name);
         closest = fishs[0];
         foreach (GameObject fish in fishs)
         {
@@ -228,7 +229,6 @@ public class PlayerMovement : MonoBehaviour
                     closest = deur;
             }
         }
-        print(closest.transform.position);
         wind.Show(closest.transform.position);
     }
 }
